@@ -9,27 +9,28 @@ Welcome to the **TPO Portal Management** repository, a centralized web applicati
    - The Registration request is send to the department admin.
    - The account will be created upon approval from the department Admin.
    - Registration requests for IT Department
-   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/0e39aca6-9ca2-4073-b73e-866208d538c9)
+   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/0132bf3a-c3e9-44b5-a48f-84355f83789c)
 
      
 2. **Profile Managment:**
    - After approval from department admin, Students have to manage their profile.
    - The data from student profile is directly send to employer of the drive to which student will apply.
-   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/e0efb332-654d-4c6f-b7a8-df2d20326a69)
+   -![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/b759afab-2fdc-4643-af41-e97abbc1f774)
+
 
 
 3. **Drive Creation and Application:**
    - **TPO_Admin** has the authority to create new placement drives.
-   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/dd0560af-8043-45d3-81a2-2f487923f82f)
+   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/85aa6ac8-dc7c-46b9-aa59-67d29566d976)
    - Students can apply to drives through their individual logins.
-   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/9d2ee243-a049-4c8a-a788-5d395f6d8249)
+   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/bce49230-5932-48e9-abb6-a709638a8b6e)
 
 
 4. **Application Management:**
    - *TPO_Admin* can access and review drive applications. Can Shortlist applications according to criteria
-   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/46d38512-c54a-445e-84f4-439d292cc66e)
+   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/6f315d64-734f-4d4e-b8d2-aed5b333757e)
    - Data of eligible students for the drive can be downloaded in Excel format for further analysis.
-   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/59d01b32-0988-45b2-b63f-255d039f2ab1)
+   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/ecbe9921-d995-4a8c-b4df-9ff38602faef)
 
 
 5. **Selection Process:**
