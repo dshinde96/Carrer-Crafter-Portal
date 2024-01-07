@@ -15,13 +15,12 @@ Welcome to the **TPO Portal Management** repository, a centralized web applicati
 2. **Profile Managment:**
    - After approval from department admin, Students have to manage their profile.
    - The data from student profile is directly send to employer of the drive to which student will apply.
-   -![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/b759afab-2fdc-4643-af41-e97abbc1f774)
-
+   -![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/165fba5e-da3d-4d74-b4f4-cd99a265792d)
 
 
 3. **Drive Creation and Application:**
    - **TPO_Admin** has the authority to create new placement drives.
-   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/85aa6ac8-dc7c-46b9-aa59-67d29566d976)
+   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/96fef935-16e0-4186-a108-8aa76de2dbda)
    - Students can apply to drives through their individual logins.
    - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/bce49230-5932-48e9-abb6-a709638a8b6e)
 
