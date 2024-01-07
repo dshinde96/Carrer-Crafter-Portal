@@ -1,0 +1,19 @@
+.ReqCnt{
+    margin-top: 10px;
+}
+.ReqCnt h4{
+    text-align: center;
+}
+.ReqItem{
+    background-color: #f7f7f9;
+    margin: 30px 0px;
+    padding: 10px 20px;
+}
+.ReqItem spam{
+    font-weight: bold;
+    color: rgb(48, 47, 47);
+}
+.Reqbtns{
+    display: flex;
+    justify-content: flex-end;
+}

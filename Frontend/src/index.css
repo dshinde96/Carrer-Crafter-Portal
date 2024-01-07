@@ -1,0 +1,263 @@
+
+
+/* Body Component */
+.body_cnt{
+    width: 99vw;
+    height:80vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.sub_cnt{
+    width: 40%;
+    background-color: rgba(245, 245, 230, 0.873);
+    height: 50%;
+    /* padding: 5px 20px; */
+    border-radius: 10px;
+    box-shadow: 10px 5px 5px rgb(102, 98, 98);
+    overflow: scroll;
+}
+.sub_cnt h2{
+    text-align: center;
+}
+
+/* Header */
+.Container{
+    width: 100%;
+    height: 20%;
+    /* background-color: aqua; */
+    background-color: #c6efed;
+    display: flex;
+    /* justify-content: space-around; */
+}
+.clg_logo_cnt{
+    margin-top: 4px;
+    margin-left: 5%;
+    width: 10%;
+    height: 95%;
+    border: 1px;
+    border-radius: 10px;
+}
+.clg_logo{
+    width: 100%;
+    height: 100%;
+    border: 1px;
+    border-radius: 50%;
+    
+}
+
+.clg_name{
+    width: 70%;
+    /* margin-right: 10px; */
+    text-align: center;
+}
+
+/* Navbar */
+.profile_pic{
+    height: 40px;
+    width: 40px;
+}
+.profile{
+    /* min-width: 100px; */
+    /* position: sticky; */
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    min-width: 150px;
+}
+
+/*Profile*/
+
+
+.main_cnt_profile{
+    width: 100%;
+    height: 300px;
+    /* margin-top: 50px; */
+}
+.Profile_head_profile{
+    display: flex;
+    width: 100%;
+    /* background-color: #f7f7f9; */
+    /* border-radius: 20px; */
+    height: 30%;
+    /* justify-content: space-around; */
+}
+.profile_pic_profile{
+    height: 100%;
+    margin-left: 10px;
+    /* width: 30%; */
+    border-radius: 50%;
+    background-color: beige;
+    color: rgb(40, 12, 21);;
+}
+.profile_cnt_profile{
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    color: rgb(40, 12, 21);
+    font-size: 30px
+}
+a{
+    font-style: normal;
+    color: black;
+    text-decoration: none;
+}
+.profile_main_cnt{
+    display: flex;
+}
+.profile_sidebar{
+    width: 20%;
+    margin: 18px 25px;
+    margin-left: 0px;
+    background-color: #f7f7f9;
+    border-radius: 20px;
+    /* position: sticky; */
+    /* top: 50px; */
+    /* z-index: 9999; */
+    text-align: center;
+}
+.profile_sidebar p{
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(73, 73, 63);
+}
+.profile_body{
+    width: 80%;
+}
+
+.profile_item{
+    margin:10px 0px;
+    background-color: #f7f7f9;
+    border-radius: 20px;
+    padding-bottom: 10px;
+}
+.profile_cnt{
+    margin: 0px 20px;
+}
+.Item{
+    min-width: 40%;
+    /* border: 1px solid black;     */
+    background-color: white;
+    border-radius: 25px;
+    padding: 10px 20px;
+    /* padding-top: 10px; */
+    margin: 25px 10px;
+}
+.delete_btn{
+    font-weight: bold;
+    text-align: center;
+    margin: 5px 10px;
+    font-size: 25px;
+    color: red;
+    width: 30px;
+}
+.delete_btn:hover,.edit_btn:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.edit_btn{
+    /* font-weight: bold; */
+    text-align: center;
+    margin: 5px 10px;
+    font-size: 25px;
+    color: green;
+    width: 30px;
+}
+
+.btn_cnt{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 50px;
+}
+
+.head_cnt{
+    display: flex;
+    justify-content: space-between;
+}
+
+/*Alumini Record*/
+.stu_cnt_alumin{
+    height: 100vh;
+    width: 100vw;
+}
+.stu_cnt_alumin h2{
+    text-align: center;
+}
+.cnt_alumin{
+    width: 100%;
+    max-height: 90%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.tbl_cnt_alumin{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    /* overflow: scroll; */
+}
+p spam{
+    font-weight: bold;
+    color: rgb(67, 67, 63);
+}
+
+/* Ongoing drive */
+table{
+    border: 1px solid black;
+    /* margin-top: 40px; */
+    padding: 30px;
+}
+tr {
+    border: 1px solid black;
+    text-align: center;
+    height: 30px;
+  }
+
+th,td,tr{
+    width: 150px;
+  
+}
+tr{
+    transition: all 0.15s linear;
+}
+
+
+/* Row.css*/
+.Row{
+    transition: all linear 0.03s;
+}
+.Row:hover{
+    /* transform: scale(1.01); */
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/*Ongoing Drive*/
+.DriveItemAdmin{
+    background-color: #f7f7f9;
+    margin: 30px 0px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-around;
+}
+.DriveItemAdmin spam{
+    font-weight: bold;
+    color: rgb(48, 47, 47);
+}
+.btn_cnt{
+    height: 50%;
+    align-items: center;
+}
+table{
+    width: 100%;
+}
+.Downloadbtn{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
