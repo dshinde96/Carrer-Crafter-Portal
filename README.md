@@ -35,7 +35,10 @@ Welcome to the **TPO Portal Management** repository, a centralized web applicati
 5. **Selection Process:**
    - Upon completion of the drive, *TPO_Admin* receives a list of selected students.
    - *TPO_Admin* can make final selections and update the placement status for each student.
+   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/da11c51b-526c-4f2d-a4f2-be7d472f0bd4)
 
 6. **Profile Updates:**
    - Selected students profiles automatically reflect changes in their placement status.
+   - ![image](https://github.com/dshinde96/TPO-Portal/assets/109900406/f3d49b50-ebe4-4db2-8bf1-bb9ed658f830)
+
   
