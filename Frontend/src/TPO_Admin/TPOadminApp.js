@@ -9,9 +9,11 @@ import Profile from "./Components/RegisteredStudent/Profile/Profile";
 import OngoingDrives from "./Components/OngoingDrives/OngoinDrives";
 import DisplayDriveReocrd from './Components/OngoingDrives/DisplayDriveRecord';
 import AddDriveForm from './Components/OngoingDrives/AddDriveForm';
+import Metadata from "../Spinner/Metadata";
 const App=()=>{
     return(
         <>
+        <Metadata title={"TPO admin"}/>
             <Routes>
                 <Route exact path="/" element={<Home/>}/>
                 <Route exact path="/AllDrives" element={<OngoingDrives />} />

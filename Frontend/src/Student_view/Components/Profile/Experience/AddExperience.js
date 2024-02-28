@@ -22,7 +22,7 @@ const AddExperience = () => {
                     <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="position" value={exp.position} onChange={handle_change}/>
                 </div>
                 <div className="mb-3">
-                    <label for="exampleInputPassword1" className="form-label">Oranisation where you worked</label>
+                    <label for="exampleInputPassword1" className="form-label">Company where you worked</label>
                     <input type="text" className="form-control" id="exampleInputPassword1" value={exp.org} name="org" onChange={handle_change}/>
                 </div>
                 <div className="mb-3" style={{"width":"500px"}}>

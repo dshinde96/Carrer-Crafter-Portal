@@ -5,7 +5,7 @@ const Row=(props)=>{
     const navigate=useNavigate();
     return(
         <>
-        <tr className='Row' id="Row" >
+        <tr className='Row neo' id="Row" >
         {/* {console.log(props.value)} */}
         <td  onClick={()=>navigate(`/profile/display/${props.student._id}`)}>{props.index+1}</td>
         <td  onClick={()=>navigate(`/profile/display/${props.student._id}`)}>{props.student.name}</td>

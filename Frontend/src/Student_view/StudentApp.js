@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import OngoingDrives from "./Components/OngoingDrives/OngoinDrives";
 import ApplicationForm from './Components/OngoingDrives/ApplicationFrom';
 import DisplayDriveRecord from "./Components/OngoingDrives/DisplayDriveRecord";
+import Metadata from "../Spinner/Metadata";
 const App = () => {
     const navigate=useNavigate();
     useEffect(()=>{
@@ -28,6 +29,7 @@ const App = () => {
     
     return (
         <>
+        <Metadata title={"Student "}/>
             <Stustate>
                 <Routes>
                     <Route exact path="/" element={<Home />} />

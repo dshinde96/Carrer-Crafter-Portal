@@ -20,7 +20,7 @@ const DriveItem = (props) => {
     // const {acceptReq,rejectReq}=useContext(stucontext);
     return (
         <>
-            <div className="ReqItem">
+            <div className="ReqItem rounded">
                 <p>Company Name: <spam>{Drive.CompanyName}</spam></p>
                 <p>JobTitle: <spam>{Drive.JobTitle}</spam></p>
                 <p>JobDescription: <spam>{Drive.JobDescription}</spam></p>

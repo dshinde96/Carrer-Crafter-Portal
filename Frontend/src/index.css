@@ -1,5 +1,4 @@
 
-
 /* Body Component */
 .body_cnt{
     width: 99vw;
@@ -20,13 +19,72 @@
 .sub_cnt h2{
     text-align: center;
 }
-
+/* neo */
+.container {
+    margin-bottom: 100px;
+  }
+  
+  .jumbotron.default {
+    background-color: transparent;
+    padding: 4rem 15px;
+    box-shadow: none;
+  }
+  
+  section.row + .row {
+    margin-top: 70px;
+  }
+  
+  .component-title {
+    font-size: 1.5em;
+  }
+  
+  .component {
+    margin-top: 30px;
+  }
+  
+  .component.buttons .btn {
+    margin-left: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .component.round-btns .btn {
+    font-size: 25px;
+    height: 45px;
+    padding: 0;
+    width: 45px;
+  }
+  
+  .component.round-btns .btn + .btn {
+    margin-left: 30px;
+  }
+  
+  .component.dropdown-btn > .dropdown {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .component.cards > div {
+    margin-bottom: 20px;
+  }
+  
+  .badge {
+    margin: 5px;
+  }
+  
+  .component.collapses .btn {
+    margin-right: 20px;
+  }
+  
+  .component.collapses > div {
+    margin-bottom: 20px;
+  }
+  
 /* Header */
 .Container{
     width: 100%;
     height: 20%;
     /* background-color: aqua; */
-    background-color: #c6efed;
+    /* background-color: #c6efed; */
     display: flex;
     /* justify-content: space-around; */
 }
@@ -64,6 +122,64 @@
     align-items: center;
     justify-content: space-evenly;
     min-width: 150px;
+}
+.container {
+  margin-bottom: 100px;
+}
+
+.jumbotron.default {
+  background-color: transparent;
+  padding: 4rem 15px;
+  box-shadow: none;
+}
+
+section.row + .row {
+  margin-top: 70px;
+}
+
+.component-title {
+  font-size: 1.5em;
+}
+
+.component {
+  margin-top: 30px;
+}
+
+.component.buttons .btn {
+  margin-left: 15px;
+  margin-bottom: 20px;
+}
+
+.component.round-btns .btn {
+  font-size: 25px;
+  height: 45px;
+  padding: 0;
+  width: 45px;
+}
+
+.component.round-btns .btn + .btn {
+  margin-left: 30px;
+}
+
+.component.dropdown-btn > .dropdown {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.component.cards > div {
+  margin-bottom: 20px;
+}
+
+.badge {
+  margin: 5px;
+}
+
+.component.collapses .btn {
+  margin-right: 20px;
+}
+
+.component.collapses > div {
+  margin-bottom: 20px;
 }
 
 /*Profile*/

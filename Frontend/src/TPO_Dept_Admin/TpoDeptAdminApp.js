@@ -6,9 +6,11 @@ import Home from './Components/Home'
 import Requests from "./Components/Pending Requests/Requests";
 import RegisteredStudent from "./Components/RegisteredStudent/RegisteredStudents";
 import Profile from "./Components/RegisteredStudent/Profile/Profile";
+import Metadata from "../Spinner/Metadata";
 const App=()=>{
     return(
         <>
+        <Metadata title={"Department admin"}/>
             <Routes>
                 <Route exact path="/" element={<Home/>}/>
                 {/* <Route exact path="/placement_stat" element={<Placement_stat/>}/> */}

@@ -1,17 +1,17 @@
 const jwt = require("jsonwebtoken");
 const fs=require('fs');
-let secretKey="";
-
+let secretKey=process.env.secretkey;
+require('dotenv').config()
 //read the secretkey from the file
-fs.readFile('../Private/Private.txt','utf-8',(err,res)=>{
-    if(err)
-    {
-        console.log(err);
-    }
-    else{
-        secretKey=res;
-    }
-});
+// fs.readFile(process.env.secretkey,'utf-8',(err,res)=>{
+//     if(err)
+//     {
+//         console.log(err);
+//     }
+//     else{
+//         secretKey=res;
+//     }
+// });
 
 const generateTocken = (user) => {
     try {

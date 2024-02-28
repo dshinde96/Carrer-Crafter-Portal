@@ -67,7 +67,7 @@ const Login = (props) => {
                     <h2>Login</h2>
 
                     <div>
-                        <label htmlFor="exampleInputEmail1" className="form-label">{props.role=='Student'?"Registration No." :"email"}</label>
+                        <label htmlFor="exampleInputEmail1" className="form-label">{props.role==='Student'?"Registration No." :"email"}</label>
                         <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="reg_no" onChange={handle_change} />
                     </div>
 
@@ -82,7 +82,7 @@ const Login = (props) => {
                         <option value="TPO_Admin" className='options'>TPO Admin</option>
                     </select>
                 </div>
-                    <button className="btn btn-primary" type="button" onClick={()=>{Add_user()}}>Login</button>
+                    <button className=" bg-red-300 h-10 w-20 rounded-md" type="button" onClick={()=>{Add_user()}}>Login</button>
                 </div>
             </form>
         </>

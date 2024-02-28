@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const {Schema}=mongoose;
 
-const Drives=new Schema({
+const Drives = new Schema({
     CompanyName:{
         type:String,
         required:true

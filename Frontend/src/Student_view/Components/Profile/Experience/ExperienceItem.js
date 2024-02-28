@@ -22,7 +22,7 @@ const NoteItem = (props) => {
                         <i className="fa fa-trash delete_btn" style={{fontSize:"25px"}} title="Delete Item" onClick={handle_delete}></i>
                     </div>
                 </div>
-                <p>Oranisation: <spam>{exp.org}</spam></p>
+                <p>Organisation: <spam>{exp.org}</spam></p>
                 <p>Start Year: <spam>{new Date(exp.start_year).getMonth()}/{new Date(exp.start_year).getFullYear()}</spam></p>
                 <p>End Year: <spam>{new Date(exp.end_year).getMonth()}/{new Date(exp.end_year).getFullYear()}</spam></p>
                 {/* <p>{note.tags}</p> */}
