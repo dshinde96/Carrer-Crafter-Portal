@@ -54,7 +54,7 @@ router.post('/RegisterStu', async (req, res) => {
     }
 })
 
-//router:POST:/RegisterDeptAdmin => Register Department Admin => Must login as Admin
+//router:POST:/RegisterTPOAdmin => Register TPO Admin
 router.post('/RegisterAdmin', async (req, res) => {
     const Tpo_adm = await TPO_Admin.find({});
     // console.log(Tpo_adm.length);
