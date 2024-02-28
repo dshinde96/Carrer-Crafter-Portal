@@ -26,7 +26,7 @@ const DriveItem = (props) => {
                 <p>JobDescription: <spam>{Drive.JobDescription}</spam></p>
                 <p>Package: <spam>{Drive.Package}</spam></p>
                 <p>Expected Openings: <spam>{Drive.ExpectedOpening}</spam></p>
-                <p>Eligibility Criterias <spam>{Drive.EligibilityCriteria}</spam></p>
+                <p>Eligibility Criterias: <spam>{Drive.EligibilityCriteria}</spam></p>
                 <div className="Reqbtns">
                     {applicationStatus?<p>Status: <spam>{applicationStatus}</spam></p>:<button type="button" className="btn btn-primary mx-2" onClick={()=>{navigate(`/drive/apply/${Drive._id}`)}}>Apply now</button>}
                     <button className="btn btn-primary mx-2" onClick={()=>navigate(`/drive/selectedStudents/${Drive._id}`)}>View Selected Students</button>

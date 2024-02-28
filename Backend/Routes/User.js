@@ -55,6 +55,25 @@ router.post('/RegisterStu', async (req, res) => {
 })
 
 //router:POST:/RegisterDeptAdmin => Register Department Admin => Must login as Admin
+router.post('/RegisterAdmin', async (req, res) => {
+    const Tpo_adm = await TPO_Admin.find({});
+    // console.log(Tpo_adm.length);
+    if (Tpo_adm.length != 0) {
+        return res.send({ msg: "Only one admin is permitted" });
+    }
+    const {name,email,mob_no,password}=req.body;
+    var salt = bcrypt.genSaltSync(10);
+    var secPass = bcrypt.hashSync(password, salt);
+    await TPO_Admin.create({
+        name,
+        email,
+        mob_no,
+        password:secPass
+    });
+    res.send({ msg: "Admin registered successfully" });
+})
+
+//router:POST:/RegisterDeptAdmin => Register Department Admin => Must login as Admin
 router.post('/RegisterDeptAdmin', AuthenticateUser, restrictTo(["TPO_Admin"]), async (req, res) => {
     try {
         console.log(req.body);
