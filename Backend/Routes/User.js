@@ -29,7 +29,7 @@ router.post('/req_reject/:id', AuthenticateUser,restrictTo(["TPO_Dept_Admin"]), 
 //router:POST:/getAllStudents:=> Fetch All Students Registered => Must login as department Admin or Admin
 router.get('/getAllStudents', AuthenticateUser,restrictTo(["TPO_Admin","TPO_Dept_Admin"]), handleGetAllStu);
 
-//router:POST:/updatePersonalDetails
+//router:POST:/updatePersonalDetails:=>Update personal details 
 router.post('/UpdatePersonalDetails',AuthenticateUser,handleUpdatePersonalDet);
 
 module.exports = router;

@@ -303,6 +303,8 @@ const handleUpdatePersonalDet=async(req,res)=>{
             return res.json({msg:"Request for update personal details is sent to your department admin"});
             
         }
+        else
+        return res.json({msg:"Updatedetails is functional for student only. Work in progress for other roles"})
     } catch (error) {
         console.log(error.message);
         return res.status(500).send({ msg: "Internal Server error" });
