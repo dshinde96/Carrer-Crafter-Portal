@@ -4,7 +4,7 @@ const {Schema}=mongoose;
 const Education=new Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
-        refs:"User_stu",
+        ref:"User_stu",
         required:true
     },
     title:{

@@ -1,7 +1,7 @@
 const User_stu = require('../Models/User_stu');
 const TPO_Admin = require('../Models/User_TPO_Admin');
 const TPO_Dept_Admin = require('../Models/User_TPO_Dept_Admin');
-const Reg_req = require('../Models/Reg_req');
+const PendingReq = require('../Models/PendingReq');
 const Education=require('../Models/Education');
 const { generateTocken } = require('../Services/AuthServices');
 const { body, validationResult } = require('express-validator');
@@ -19,14 +19,14 @@ const handleRegisterStu= async (req, res) => {
         if (stu) {
             return res.status(401).send({ msg: "User with the specified registration number already exists" });
         }
-        stu = await Reg_req.findOne({ reg_no: req.body.reg_no });
+        stu = await PendingReq.findOne({ reg_no: req.body.reg_no });
         if (stu) {
             return res.status(401).send({ msg: "The request for specified user is already sent to the respective department authority. Account will be created after permitting the respective authority" });
         }
         // var salt = bcrypt.genSaltSync(10);
         bcrypt.hash(req.body.password, 10, async function (err, hash) {
             if (!err) {
-                const user_stu = await Reg_req.create({
+                const user_stu = await PendingReq.create({
                     name,
                     reg_no,
                     password: hash,
@@ -34,7 +34,8 @@ const handleRegisterStu= async (req, res) => {
                     dept,
                     year,
                     email,
-                    mob_no
+                    mob_no,
+                    Reqtype:"RegisterNewStu"
                 });
                 return res.send({ msg: "Request for registration is sent to mentioned department authority. Account will be created on authorization by the authority" });
             }
@@ -158,13 +159,13 @@ const handleRegistrationReq=async (req, res) => {
     try {
         if(req.user.role==="TPO_Admin"){
             console.log("TPO_Admin");
-            const reg_req = await Reg_req.find({}).select("-password");
-            console.log(reg_req);
-            return res.send({ reg_req, msg: "Registration requests fetched successfull" });
+            let request = await PendingReq.find({}).populate({path: 'OriginalStu', select: '-password -CompanyName -applicationHistory -placed'}).select("-password");
+            // console.log(request);
+            return res.send({ request, msg: "Registration requests fetched successfull" });
         }
         else{
-            const reg_req = await Reg_req.find({ dept: req.user.dept }).select("-password");
-            return res.send({ reg_req, msg: "Registration requests fetched successfull" });
+            const request = await PendingReq.find({ dept: req.user.dept }).populate({path: 'OriginalStu', select: '-password -CompanyName -applicationHistory -placed'}).select("-password");
+            return res.send({ request, msg: "Registration requests fetched successfull" });
         }
 
     } catch (error) {
@@ -175,44 +176,61 @@ const handleRegistrationReq=async (req, res) => {
 
 const handleReqAcept=async (req, res) => {
     try {
-        const reg_req = await Reg_req.findById(req.params.id);
-        // console.log(reg_req);
-        if (!reg_req) {
-            return res.status(404).send({ msg: "User with the specified ID does not exist" });
+        let request = await PendingReq.findById(req.params.id).populate('OriginalStu');
+        if (!request) {
+            return res.status(404).send({ msg: "Request Not Found" });
         }
-        if (req.user.dept !== reg_req.dept) {
+        if (req.user.dept !== request.dept) {
             return res.status(401).send({ msg: "Access denied" });
         }
+        if(request.Reqtype=='RegisterNewStu'){
+            await User_stu.create({
+                name: request.name,
+                reg_no: request.reg_no,
+                password: request.password,
+                dob: request.dob,
+                dept: request.dept,
+                year: request.year,
+                email: request.email,
+                mob_no: request.mob_no,
+                placed:false
+            });
+            let stu=await User_stu.findOne({reg_no:request.reg_no});
+            await Education.create({
+                user:stu._id,
+                title:"10th",
+                percentage:0
+            })
+            await Education.create({
+                user:stu._id,
+                title:"12th/Diploma",
+                percentage:0
+            })
+            await Education.create({
+                user:stu._id,
+                title:"Btech",
+                percentage:0
+            })
+            await PendingReq.findByIdAndDelete(req.params.id);
+            return res.send({ msg: "Student registered Successfully" });
+        }
+        else{
+                let {OriginalStu}=request;
+                console.log(OriginalStu);
+                OriginalStu.name=request.name;
+                OriginalStu.mob_no=request.mob_no;
+                OriginalStu.year=request.year;
+                OriginalStu.dept=request.dept;
+                const UpdatedStu=await OriginalStu.save();
+                if(UpdatedStu){
+                    await PendingReq.findByIdAndDelete(request._id);
+                    return res.json({msg:"Profile Updated Successfully"});
+                }
+                else{
+                    return res.status(500).json({msg:"Internal Server Error"});
+                }
 
-        await User_stu.create({
-            name: reg_req.name,
-            reg_no: reg_req.reg_no,
-            password: reg_req.password,
-            dob: reg_req.dob,
-            dept: reg_req.dept,
-            year: reg_req.year,
-            email: reg_req.email,
-            mob_no: reg_req.mob_no,
-            placed:false
-        });
-        const stu=await User_stu.findOne({reg_no:reg_req.reg_no});
-        await Education.create({
-            user:stu._id,
-            title:"10th",
-            percentage:0
-        })
-        await Education.create({
-            user:stu._id,
-            title:"12th/Diploma",
-            percentage:0
-        })
-        await Education.create({
-            user:stu._id,
-            title:"Btech",
-            percentage:0
-        })
-        await Reg_req.findByIdAndDelete(req.params.id);
-        return res.send({ msg: "Student registered Successfully" });
+        }
     } catch (error) {
         console.log(error.message);
         return res.status(500).send({ msg: "Internal Server error" });
@@ -222,16 +240,17 @@ const handleReqAcept=async (req, res) => {
 
 const handleReqReject=async (req, res) => {
     try {
-        const reg_req = await Reg_req.findById(req.params.id);
-        if (!reg_req) {
-            return res.status(404).send({ msg: "User with the specified ID does not exist" });
+        const request = await PendingReq.findById(req.params.id);
+        // console.log(request);
+        if (!request) {
+            return res.status(404).send({ msg: "Request Not Found" });
         }
-        if (req.user.dept !== reg_req.dept) {
+        if (req.user.dept !== request.dept) {
             return res.status(401).send({ msg: "Access denied" });
         }
 
-        await Reg_req.findByIdAndDelete(req.params.id);
-        return res.send({ msg: "Request Deleted" });
+        await PendingReq.findByIdAndDelete(req.params.id);
+        return res.send({ msg: "Request Rejected" });
 
     } catch (error) {
         console.log(error.message);
@@ -255,4 +274,38 @@ const handleGetAllStu=async (req, res) => {
         return res.status(500).send({ msg: "Internal Server error" });
     }
 }
-module.exports={handleRegisterStu,handleRegisterAdmin,handleRegisterDeptAdmin,handleLogin,handleRegistrationReq,handleReqAcept,handleReqReject,handleGetAllStu};
+
+const handleUpdatePersonalDet=async(req,res)=>{
+    try {
+        if(req.user.role=="Student"){
+            const {newStu}=req.body;
+            const pendingReq=await PendingReq.findOne({reg_no:req.user.reg_no});
+            if(pendingReq)
+            {
+                pendingReq.name=newStu.name;
+                pendingReq.mob_no=newStu.mob_no;
+                pendingReq.year=newStu.year;
+                pendingReq.dept=newStu.dept;
+                await PendingReq.findByIdAndUpdate(pendingReq._id,{$set:pendingReq});
+                return res.json({msg:"Request for update personal details is sent to your department admin"});
+            }
+            let student=await User_stu.findById(req.user.id).select('-CompanyName -placed -applicationHistory -_id -__v');
+            if (!student) {
+                return res.status(404).send({ msg: "Not found" });
+            }
+            student={...student.toObject(),Reqtype:"UpdatePersonalDet",OriginalStu:req.user.id};
+            student.name=newStu.name;
+            student.mob_no=newStu.mob_no;
+            student.year=newStu.year;
+            student.dept=newStu.dept;
+
+            await PendingReq.create(student);
+            return res.json({msg:"Request for update personal details is sent to your department admin"});
+            
+        }
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).send({ msg: "Internal Server error" });
+    }
+}
+module.exports={handleRegisterStu,handleRegisterAdmin,handleRegisterDeptAdmin,handleLogin,handleRegistrationReq,handleReqAcept,handleReqReject,handleGetAllStu,handleUpdatePersonalDet};

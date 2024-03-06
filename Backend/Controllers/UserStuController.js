@@ -1,4 +1,4 @@
-const Reg_req=require('../Models/Reg_req');
+const Reg_req=require('../Models/PendingReq');
 const User_stu=require('../Models/User_stu');
 const { body, validationResult } = require('express-validator');
 const Project=require('../Models/Project');

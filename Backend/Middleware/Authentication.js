@@ -12,6 +12,7 @@ const AuthenticateUser=(req,res,next)=>{
             return res.status(401).send("Access denied");
         }
         req.user=payload;
+        console.log(payload);
         next();
     } catch (error) {
         

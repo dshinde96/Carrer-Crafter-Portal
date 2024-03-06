@@ -1,6 +1,7 @@
 const mongoose=require('mongoose');
+const User_stu = require('./User_stu');
 const {Schema}=mongoose;
-const User=new Schema({
+const PendingReq=new Schema({
     name:{
         type:String,
         required:true
@@ -36,7 +37,15 @@ const User=new Schema({
     year:{
         type:String,
         required:true
+    },
+    Reqtype:{
+        type:String,
+        required:true
+    },
+    OriginalStu:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User_stu"
     }
 });
 
-module.exports=mongoose.model("User_req",User);
+module.exports=mongoose.model("PendingReq",PendingReq);
