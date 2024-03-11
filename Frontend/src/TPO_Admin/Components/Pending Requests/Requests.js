@@ -13,7 +13,7 @@ const Requests_cnt = () => {
         <>
             <div className="ReqCnt container">
                 <h4>Pending Registration Requests</h4>
-                {PendingReq.reg_req.map((ele) => <RequestItem req={ele} />)}
+                {PendingReq.map((ele) => <RequestItem req={ele} />)}
             </div>
         </>
     )

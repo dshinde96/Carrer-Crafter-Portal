@@ -3,7 +3,7 @@ import ProjectItem from './Projects/ProjectItem';
 import { useNavigate } from "react-router-dom";
 import TpoDeptcontext from "../../../../context/TpoDeptstate";
 const Projects = () => {
-    const { projects } = useContext(TpoDeptcontext).Stuprofile;
+    const { student } = useContext(TpoDeptcontext).Stuprofile;
     const navigate=useNavigate();
     // if (projects.length == 0) {
     //     return <></>
@@ -15,7 +15,7 @@ const Projects = () => {
                     <h3>Projects</h3>
                 </div>
                 <div className="profile_cnt" id="projects">
-                    {projects.map((ele) => {
+                    {student.Project.Array  .map((ele) => {
                         return (
                             <ProjectItem project={ele} />
                         )

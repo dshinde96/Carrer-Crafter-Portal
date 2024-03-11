@@ -11,10 +11,12 @@ const User_stu=new Schema({
     },
     email:{
         type:String,
+        unique:true,
         required:true
     },
     mob_no:{
         type:Number,
+        unique:true,
         required:true
     },
     role:{
@@ -37,6 +39,18 @@ const User_stu=new Schema({
         type:String,
         required:true
     },
+    Education:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Education"
+    },
+    Experience:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Experience"
+    },
+    Project:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Project"
+    },
     CompanyName:[{
         type:String,
         required:true
@@ -48,6 +62,12 @@ const User_stu=new Schema({
     applicationHistory:[{
         DriveId:{
             type:mongoose.Schema.Types.ObjectId,
+            ref:"Drive",
+            required:true
+        },
+        ApplicationId:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Application",
             required:true
         },
         status:{

@@ -3,7 +3,7 @@ import stucontext from "../../../context/stucontext";
 import ProjectItem from './Projects/ProjectItem';
 import { useNavigate } from "react-router-dom";
 const Projects = () => {
-    const { projects } = useContext(stucontext).profile;
+    const { student } = useContext(stucontext).profile;
     const navigate=useNavigate();
     // if (projects.length == 0) {
     //     return <></>
@@ -16,7 +16,7 @@ const Projects = () => {
                     <button type="button" class="btn btn-primary btn_add" onClick={()=>{navigate("/myprofile/addProject")}}>Add Project</button>
                 </div>
                 <div className="profile_cnt" id="projects">
-                    {projects.map((ele) => {
+                    {student.Project.Array.map((ele) => {
                         return (
                             <ProjectItem project={ele} />
                         )

@@ -30,7 +30,7 @@ const Login = (props) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({email:user.reg_no,password:user.password,role:props.role})
+                body: JSON.stringify({email:user.reg_no,password:user.password,role:"Admin"})
             });
         }
         const data = await response.json();

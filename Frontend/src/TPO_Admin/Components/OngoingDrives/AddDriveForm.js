@@ -11,9 +11,10 @@ const Signup = () => {
         "JobDescription": "",
         "Package": 0,
         "ExpectedOpening": 0,
-        "EligibilityCriteria": ""
+        "EligibilityCriteria": "",
+        "Questions":[]
     })
-
+    const [Que,setQue]=useState('');
     const handle_change = (e) => {
         setdrive({ ...drive, [e.target.name]: e.target.value });
     }
@@ -60,7 +61,13 @@ const Signup = () => {
                         <input type="text" className="form-control" name="EligibilityCriteria" id="exampleInputPassword1" onChange={handle_change} />
                     </div>
 
-
+                    <div>
+                        {drive.Questions.map((Que)=><p>{Que}</p>)}
+                    </div>
+                    <div>
+                        <input type="text" value={Que} onChange={(e)=>setQue(e.target.value)}/>
+                        <button type="button" onClick={()=>{drive.Questions.push(Que); setQue('');}}>Add Question</button>
+                    </div>
                     <button className="btn btn-primary" type="button" onClick={() => {
                         addDrive(drive);
                         navigate('/AllDrives');

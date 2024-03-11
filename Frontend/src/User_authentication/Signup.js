@@ -6,7 +6,10 @@ import LoadContext from "../context/loadContext";
 
 const Signup = () => {
     const [invalidcred, setinvalidcred] = useState(false);
-    const [regSuccess, setregSuccess] = useState(false);
+    const [OTP,setOTP]=useState();
+    const [OtpMsg,setOtpMsg]=useState("");
+    const [emailVerify,setemailVerify]=useState(false);
+    const [registrationMsg,setregistrationMsg]=useState("");
     const [user, setuser] = useState({ reg_no: 0, name: "", email: "", mob_no: 0, dob: "", dept: "", year: "", password: "" });
     const {urlHead}=useContext(LoadContext)
     const handle_change = (e) => {
@@ -14,6 +17,8 @@ const Signup = () => {
     }
     const navigate = useNavigate();
     const Add_user = async () => {
+        if(!emailVerify)
+        return;
         const url = `${urlHead}/user/RegisterStu`;
         const response = await fetch(url, {
             method: "POST",
@@ -22,14 +27,34 @@ const Signup = () => {
             },
             body: JSON.stringify(user) // body data type must match "Content-Type" header
         });
-        const msg = await response.json();
-        if (response.status != 200) {
-            // alert(msg.error);
-            setinvalidcred(true);
-        }
-        else {
-            setregSuccess(true);
-        }
+        const data = await response.json();
+        setregistrationMsg(data.msg);
+    }
+
+    const GenerateOTP=async()=>{
+        const url = `${urlHead}/user/SendVerificationOTP`;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({email:user.email}) // body data type must match "Content-Type" header
+        });
+        const data = await response.json();
+        setOtpMsg(data.msg);
+    }
+    const VerifyOTP=async()=>{
+        const url = `${urlHead}/user/VerifyOTP`;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({email:user.email,otp:OTP}) // body data type must match "Content-Type" header
+        });
+        const data = await response.json();
+        setOtpMsg(data.msg);
+        setemailVerify(data.Verfied);
     }
     return (
         <>
@@ -37,10 +62,7 @@ const Signup = () => {
             <Navbar/>
             <form className="container" style={{ marginTop: "100px" }}>
                 <div className="alert">
-                    {invalidcred ? <div class="alert alert-primary  d-flex justify-content-between" role="alert">
-                        <h5>This registration number already registered...Kindly login</h5><i className="fa fa-trash delete_btn" title="Delete Item" onClick={() => { setinvalidcred(false) }}></i>
-                    </div> : ""}
-                    {regSuccess ? <div class="alert alert-success d-flex justify-content-between" role="alert"><h5>Details is sent to respective department admin. Account will be created on further approval.</h5><i className="fa fa-trash delete_btn" title="Delete Item" onClick={() => { setregSuccess(false) }}></i></div>:""}
+                    <p>{registrationMsg}</p>
                 </div>
                 <div className="container">
                     <h2>Register with Your Registration number</h2>
@@ -56,10 +78,18 @@ const Signup = () => {
                     </div>
 
                     <div>
+                        <p>{OtpMsg}</p>
+                        <label>Email Address</label>
+                        <input type="email" name="email" onChange={handle_change}/>
+                        <button className="btn-primary" type="button" onClick={GenerateOTP}>Generate OTP</button>
+                        <input type="text" name="OTP" onChange={(e)=>setOTP(e.target.value)}/>
+                        <button className="btn-primary" type="button" onClick={VerifyOTP}>Submit</button>
+                    </div>
+                    {/* <div>
                         <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" onChange={handle_change} />
                         <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-                    </div>
+                    </div> */}
 
                     <div>
                         <label htmlFor="exampleInputEmail1" className="form-label">Mobile Number</label>

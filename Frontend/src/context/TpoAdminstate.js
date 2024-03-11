@@ -8,34 +8,32 @@ const TpoAdminstate = (props) => {
         "username": "",
         "__v": 0
     };
-    const initreq = {
-        reg_req: [],
-    }
+    // const initreq = {
+    //     reg_req: [],
+    // }
     const { loading, setloading,urlHead } = useContext(LoadContext);
     const [profile, setprofile] = useState(initprofile);
-    const [PendingReq, setPendingReq] = useState(initreq);
+    const [PendingReq, setPendingReq] = useState([]);
     const [Allstu, setAllstu] = useState([]);
     const [Stuprofile, setStuprofile] = useState({
-        "student": {
-            "_id": "",
-            "name": "",
-            "reg_no": "",
-            "email": "",
-            "mob_no": 0,
-            "dob": "",
-            "dept": "",
-            "year": "",
-            "CompanyName": [],
-            "placed": false,
-            "applicationHistory": [],
-            "__v": 0
-        },
-        "education": [],
-        "projects": [
-        ],
-        "experience": [],
-        "msg": "Profile fetched successfully"
-    })
+        "student":{
+         "_id": "65eed44f914dfc81ad66b645",
+         "name": "Dnyaneshwar Vijay Shinde",
+         "dept": "Information Technology",
+         "year": "Final Year",
+         "Education": {
+             "Array": []
+         },
+         "Experience": {
+             "Array": []
+         },
+         "Project": {
+             "Array": []
+         },
+         "CompanyName": [],
+         "placed": false,
+        }
+     })
     const [Alldrives, setAllDrives] = useState([]);
     const [DriveStu, setDriveStu] = useState([]);
     const [curDrive, setcurDrive] = useState({
@@ -72,13 +70,12 @@ const TpoAdminstate = (props) => {
         const response = await fetch(url, {
             method: "GET",
             headers: {
-                "User-Agent": "Thunder Client (https://www.thunderclient.com)",
                 "auth-tocken": `${sessionStorage.getItem('tocken')}`
             }
         });
         const data = await response.json();
-        // console.log(data.profile.username);
-        setPendingReq(data);
+        // console.log(data);
+        setPendingReq(data.request);
         setloading(false);
     }
 
@@ -107,6 +104,7 @@ const TpoAdminstate = (props) => {
             }
         });
         const data = await response.json();
+        // console.log(data);
         setStuprofile(data);
         setloading(false);
     }

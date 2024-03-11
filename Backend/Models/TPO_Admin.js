@@ -17,7 +17,10 @@ const TPO_Admin=new Schema({
     },
     role:{
         type:String,
-        default:"TPO_Admin"
+        required:true
+    },
+    dept:{
+        type:String
     },
     password:{
         type:String,

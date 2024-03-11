@@ -3,7 +3,7 @@ import ExperienceItem from './Experience/ExperienceItem';
 import { useNavigate } from "react-router-dom";
 import TpoAdminContext from "../../../../context/TpoAdminstate";
 const Experience = () => {
-    const { experience } = useContext(TpoAdminContext).Stuprofile;
+    const { Array } = useContext(TpoAdminContext).Stuprofile.student.Experience;
     const navigate=useNavigate();
     return (
         <>
@@ -12,7 +12,7 @@ const Experience = () => {
                     <h3>Experience</h3>
                 </div>
                 <div className="profile_cnt" id="experience">
-                    {experience.map((ele) => {
+                    {Array.map((ele) => {
                         return (
                             <ExperienceItem exp={ele} />
                         )

@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const {Schema}=mongoose;
 
-const Drives = new Schema({
+const Drives=new Schema({
     CompanyName:{
         type:String,
         required:true
@@ -24,11 +24,19 @@ const Drives = new Schema({
         type:String,
         required:true
     },
+    EligibleDepartMents:[],
+    EligibleYears:[],
+    Questions:[],
     InterestedStu:[{
         StuId:{
             type:mongoose.Schema.Types.ObjectId,
             required:true,
             ref:"User_stu"
+        },
+        ApplicationID:{
+            type:mongoose.Schema.Types.ObjectId,
+            required:true,
+            ref:"Application"
         }
     }],
     EligibleStu:[{
@@ -36,6 +44,11 @@ const Drives = new Schema({
             type:mongoose.Schema.Types.ObjectId,
             required:true,
             ref:"User_stu"
+        },
+        ApplicationID:{
+            type:mongoose.Schema.Types.ObjectId,
+            required:true,
+            ref:"Application"
         }
     }],
     SelectedStu:[{
@@ -43,6 +56,11 @@ const Drives = new Schema({
             type:mongoose.Schema.Types.ObjectId,
             required:true,
             ref:"User_stu"
+        },
+        ApplicationID:{
+            type:mongoose.Schema.Types.ObjectId,
+            required:true,
+            ref:"Application"
         }
     }]
 },{timestamps:true});

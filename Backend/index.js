@@ -15,6 +15,7 @@ app.use(cors());
 app.use('/user',require('./Routes/User'));
 app.use('/Student',require('./Routes/UserstuRoute'));
 app.use('/Drive',require('./Routes/Drive'));
+app.use('/PlacementStat',require('./Routes/PlacementStat'));
 
 app.listen(PORT,()=>{
     console.log(`App listening on port ${PORT}`);

@@ -3,7 +3,7 @@ import EducationItem from './Education/EducationItem'
 import { useNavigate } from "react-router-dom";
 import TpoAdminContext from "../../../../context/TpoAdminstate";
 const Education = () => {
-    const { education } = useContext(TpoAdminContext).Stuprofile;
+    const { student } = useContext(TpoAdminContext).Stuprofile;
     return (
         <>
             <div className="profile_item">
@@ -11,7 +11,7 @@ const Education = () => {
                     <h3>Education</h3>
                 </div>
                 <div className="profile_cnt" id="experience">
-                    {education.map((ele) => {
+                    {student.Education.Array.map((ele) => {
                         return (
                             <EducationItem edu={ele} />
                         )

@@ -3,7 +3,7 @@ import stucontext from "../../../context/stucontext";
 import EducationItem from './Education/EducationItem'
 import { useNavigate } from "react-router-dom";
 const Education = () => {
-    const { education } = useContext(stucontext).profile;
+    const { student } = useContext(stucontext).profile;
     const navigate=useNavigate();
     // if (education.length == 0) {
     //     return <></>
@@ -16,7 +16,7 @@ const Education = () => {
                     <button type="button" class="btn btn-primary btn_add" onClick={()=>navigate('/myprofile/addEducation')}>Add Education</button>
                 </div>
                 <div className="profile_cnt" id="experience">
-                    {education.map((ele) => {
+                    {student.Education.Array.map((ele) => {
                         return (
                             <EducationItem edu={ele} />
                         )

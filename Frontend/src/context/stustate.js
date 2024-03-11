@@ -7,21 +7,20 @@ const Stustate = (props) => {
     "student": {
       "_id": "",
       "name": "",
-      "reg_no": "",
-      "email": "",
-      "mob_no": 0,
-      "dob": "",
       "dept": "",
       "year": "",
+      "Education": {
+        "Array": []
+      },
+      "Experience": {
+        "Array": []
+      },
+      "Project": {
+        "Array": []
+      },
       "CompanyName": [],
       "placed": false,
-      "applicationHistory": [],
-      "__v": 0
     },
-    "education": [],
-    "projects": [
-    ],
-    "experience": [],
     "msg": "Profile fetched successfully"
   };
   const [profile, setprofile] = useState(initprofile);
