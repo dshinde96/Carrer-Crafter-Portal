@@ -6,6 +6,7 @@ const Row = (props) => {
     const {addEligibleStu,addSelectedStu,rejectStu}=useContext(TpoAdminContext);
     const navigate = useNavigate();
     const {stu,index,driveId,cat}=props;
+    console.log(stu);
     return (
         <>
             <tr className='Row' id="Row" >

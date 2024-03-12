@@ -12,8 +12,10 @@ const Signup = () => {
         "Package": 0,
         "ExpectedOpening": 0,
         "EligibilityCriteria": "",
+        "EligibleDepartMents":["Electronics and Telecommunication","Civil Engineering" , "Electrical Engineering", "Mechanical Engineering","Information Technology"],
+        "EligibleYears":["First Year","Second Year","Third Year","Final Year"],
         "Questions":[]
-    })
+    });
     const [Que,setQue]=useState('');
     const handle_change = (e) => {
         setdrive({ ...drive, [e.target.name]: e.target.value });

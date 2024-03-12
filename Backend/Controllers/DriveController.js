@@ -16,7 +16,7 @@ const handleGetAllDrive = async (req, res) => {
 
 const handleDisplayDrive = async (req, res) => {
     try {
-        const drive = await Drives.findById(req.params.id).select("-InterestedStu -EligibleStu -SelectedStu");
+        const drive = await Drives.findById(req.params.id).select("-InterestedStu -EligibleStu -SelectedStu -createdAt -updatedAt");
         if (!drive) {
             return res.status(404).send({ msg: "Drive with specified id not found" })
         }
@@ -91,7 +91,8 @@ const handleApplyToDrive = async (req, res) => {
         DriveId: drive._id,
         StudentId: req.user.id,
         Answers
-    })
+    });
+    console.log(application);
     drive.InterestedStu.push({ StuId: req.user.id, ApplicationID: application._id });
     await Drives.findByIdAndUpdate(req.params.id, { $set: drive });
     stu.applicationHistory.push({ DriveId: req.params.id, ApplicationId: application._id, status: "Applied, Awaiting TPO approval" });
@@ -147,46 +148,110 @@ const handleGetSelectedStu = async (req, res) => {
 
 const handleDriveStudent = async (req, res) => {
     try {
-        const { id, cat } = req.params
-        const drive = await Drives.findById(id);
-        if (!drive) {
-            return res.status(404).send({ msg: "Drive not found" });
-        }
+        const { id, cat } = req.params;
 
         let students = [];
         //wait until all the promise execute
         if (cat === "InterestedStu") {
-            await Promise.all(drive.InterestedStu.map(async (stu) => {
-                const Student = await User_stu.findById(stu.StuId).select("-password -__v");
-                // console.log(Student);
-                const edu = await Education.find({ user: stu.StuId });
-                if (Student) {
-                    students.push({ "profile": Student, "Percentage10th": edu[0].percentage, "Percentage12th": edu[1].percentage, "BtechCGPA": edu[2].percentage });
-                    // students.push(Student);
-                }
-            }))
+            const drive = await Drives.findById(id)
+                .select("InterestedStu Questions")
+                .populate({
+                    path: "InterestedStu.StuId",
+                    select: "-password",
+                    populate: {
+                        path: "Education"
+                    }
+                })
+                .populate({
+                    path: "InterestedStu.ApplicationID"
+                });
+            // return res.json({drive});
+            await Promise.all(drive.InterestedStu.map(async (stu,index) => {
+                let Student = {
+                    "profile": {
+                        _id: stu.StuId._id,
+                        name: stu.StuId.name,
+                        reg_no: stu.StuId.reg_no,
+                        email: stu.StuId.email,
+                        mob_no: stu.StuId.mob_no,
+                        role: stu.StuId.role,
+                        dob: stu.StuId.dob,
+                        dept: stu.StuId.dept,
+                        year: stu.StuId.year,
+                        placed: stu.StuId.placed
+                    }, "Percentage10th": stu.StuId.Education.Array[0].percentage, "Percentage12th": stu.StuId.Education.Array[1].percentage, "BtechCGPA": stu.StuId.Education.Array[2].percentage
+                };
+                students.push(Student);
+            }));
         }
         else if (cat === "EligibleStu") {
-            await Promise.all(drive.EligibleStu.map(async (stu) => {
-                const Student = await User_stu.findById(stu.StuId).select("-password -__v");
-                // console.log(Student);
-                const edu = await Education.find({ user: stu.StuId });
-                if (Student) {
-                    students.push({ "profile": Student, "Percentage10th": edu[0].percentage, "Percentage12th": edu[1].percentage, "BtechCGPA": edu[2].percentage });
-                    // students.push(Student);
-                }
-            }))
+            const drive = await Drives.findById(id)
+                .select("EligibleStu Questions")
+                .populate({
+                    path: "EligibleStu.StuId",
+                    select: "-password",
+                    populate: {
+                        path: "Education"
+                    }
+                })
+                .populate({
+                    path: "EligibleStu.ApplicationID"
+                });
+            // return res.json({drive});
+            await Promise.all(
+                drive.EligibleStu.map(async (stu, index) => {
+                    let Student = {
+                        "profile": {
+                            _id: stu.StuId._id,
+                            name: stu.StuId.name,
+                            reg_no: stu.StuId.reg_no,
+                            email: stu.StuId.email,
+                            mob_no: stu.StuId.mob_no,
+                            role: stu.StuId.role,
+                            dob: stu.StuId.dob,
+                            dept: stu.StuId.dept,
+                            year: stu.StuId.year,
+                            placed: stu.StuId.placed
+                        }, "Percentage10th": stu.StuId.Education.Array[0].percentage, "Percentage12th": stu.StuId.Education.Array[1].percentage, "BtechCGPA": stu.StuId.Education.Array[2].percentage
+                    };
+                    for (let i = 0; i < drive.Questions.length; i++) {
+                        Student.Application = drive.EligibleStu[index].ApplicationID.Answers;
+                    }
+                    students.push(Student);
+                })
+            )
         }
         else if (cat === "SelectedStu") {
-            await Promise.all(drive.SelectedStu.map(async (stu) => {
-                const Student = await User_stu.findById(stu.StuId).select("-password -__v");
-                // console.log(Student);
-                const edu = await Education.find({ user: stu.StuId });
-                if (Student) {
-                    students.push({ "profile": Student, "Percentage10th": edu[0].percentage, "Percentage12th": edu[1].percentage, "BtechCGPA": edu[2].percentage });
-                    // students.push(Student);
-                }
-            }))
+            const drive = await Drives.findById(id)
+                .select("SelectedStu Questions")
+                .populate({
+                    path: "SelectedStu.StuId",
+                    select: "-password",
+                    populate: {
+                        path: "Education"
+                    }
+                })
+                .populate({
+                    path: "SelectedStu.ApplicationID"
+                });
+            // return res.json({drive});
+            await Promise.all(drive.SelectedStu.map(async (stu,index) => {
+                let Student = {
+                    "profile": {
+                        _id: stu.StuId._id,
+                        name: stu.StuId.name,
+                        reg_no: stu.StuId.reg_no,
+                        email: stu.StuId.email,
+                        mob_no: stu.StuId.mob_no,
+                        role: stu.StuId.role,
+                        dob: stu.StuId.dob,
+                        dept: stu.StuId.dept,
+                        year: stu.StuId.year,
+                        placed: stu.StuId.placed
+                    }, "Percentage10th": stu.StuId.Education.Array[0].percentage, "Percentage12th": stu.StuId.Education.Array[1].percentage, "BtechCGPA": stu.StuId.Education.Array[2].percentage
+                };
+                students.push(Student);
+            }));
         }
         // console.log(students);
         // students=students.reverse();

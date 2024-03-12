@@ -11,7 +11,7 @@ const handleMyProfile = async (req, res) => {
         .populate({ path: "Education", select: "Array" })
         .populate({ path: "Experience", select: "Array" })
         .populate({ path: "Project", select: "Array" })
-        .select("-password -reg_no -email -mob_no -role -dob");
+        .select("-password -reg_no -role -dob");
         // console.log((student));
         if (!student) {
             return res.status(404).send({ msg: "Not found" });

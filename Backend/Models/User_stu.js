@@ -16,7 +16,6 @@ const User_stu=new Schema({
     },
     mob_no:{
         type:Number,
-        unique:true,
         required:true
     },
     role:{

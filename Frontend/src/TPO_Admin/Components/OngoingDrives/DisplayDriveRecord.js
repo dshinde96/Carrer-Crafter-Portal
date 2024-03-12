@@ -8,13 +8,14 @@ import Row from "./row";
 import * as XLSX from 'xlsx';
 const DriveRecord_cnt = (props) => {
     const { curDrive, DriveStu } = useContext(TpoAdminContext);
+    console.log(curDrive);
     const params = useParams();
     const handleDownload = () => {
 
         // Convert JSON to Excel
         const students = [];
         DriveStu.map((stu) => {
-            students.push({
+            let Student={
                 name: stu.profile.name,
                 email: stu.profile.email,
                 "Moblie No": `${stu.profile.mob_no}`,
@@ -24,7 +25,11 @@ const DriveRecord_cnt = (props) => {
                 "10th Percentage": stu.Percentage10th,
                 "12th/Diploma Percentage": stu.Percentage10th,
                 "Btech CGPA": stu.Percentage10th
+            }
+            curDrive.Questions.map((que)=>{
+                Student[que]=stu.Application[que];
             })
+            students.push(Student)
         })
         const ws = XLSX.utils.json_to_sheet(students);
 

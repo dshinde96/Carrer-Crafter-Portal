@@ -4,13 +4,13 @@ import stucontext from "../../../../context/stucontext";
 const UpdateEducationt=()=>{
     const navigate=useNavigate();
     const {update_education}=useContext(stucontext);
-    const {education}=useContext(stucontext).profile;
+    const {Education}=useContext(stucontext).profile.student;
 
     const {id}=useParams();
     // console.log(id);
 
     // var p1={title:"",description:"",start_date:"",end_date:""};
-    var p1=education.find((edu)=>edu._id===id);
+    var p1=Education.Array.find((edu)=>edu._id===id);
     // console.log(p1);
     const [edu,setedu]=useState(p1);
     const handle_change=(event)=>{

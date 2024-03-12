@@ -4,13 +4,13 @@ import stucontext from "../../../../context/stucontext";
 const UpdateProject=()=>{
     const navigate=useNavigate();
     const {update_project}=useContext(stucontext);
-    const {projects}=useContext(stucontext).profile;
+    const {Project}=useContext(stucontext).profile.student;
 
     const {id}=useParams();
     console.log(id);
 
     // var p1={title:"",description:"",start_date:"",end_date:""};
-    var p1=projects.find((project)=>project._id===id);
+    var p1=Project.Array.find((project)=>project._id===id);
     console.log(p1);
     const [project,setproject]=useState(p1);
     const handle_change=(event)=>{

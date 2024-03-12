@@ -9,6 +9,8 @@ const Stustate = (props) => {
       "name": "",
       "dept": "",
       "year": "",
+      "email":"",
+      "mob_no":"",
       "Education": {
         "Array": []
       },
@@ -25,6 +27,17 @@ const Stustate = (props) => {
   };
   const [profile, setprofile] = useState(initprofile);
   const [DriveStu, setDriveStu] = useState([]);
+  const [Drive,setDrive]=useState({
+    "CompanyName": "",
+    "JobTitle": "",
+    "JobDescription": "",
+    "Package": 0,
+    "ExpectedOpening": 0,
+    "EligibilityCriteria": "",
+    "EligibleDepartMents": [],
+    "EligibleYears": [],
+    "Questions": [],
+  });
   // const [loading, setloading] = useState(false);
   const { loading, setloading, urlHead } = useContext(LoadContext);
   const [Alldrives, setAllDrives] = useState([])
@@ -214,15 +227,32 @@ const Stustate = (props) => {
     setloading(false);
   }
 
-  const ApplyDrive = async (id) => {
+  const fetchDriveDetails=async (id)=>{
+    setloading(true);
+    const url = `${urlHead}/Drive/dsiplay/${id}`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "auth-tocken": `${sessionStorage.getItem('tocken')}`
+      }
+    });
+    const data = await response.json();
+    console.log(data);
+    setDrive(data.drive);
+    setloading(false);
+  }
+  const ApplyDrive = async (id,Answers) => {
     setloading(true);
     const url = `${urlHead}/Drive/Apply/${id}`;
+    console.log(id);
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-        "auth-tocken": `${sessionStorage.getItem('tocken')}`
-      }
+        "auth-tocken": `${sessionStorage.getItem('tocken')}`,
+        "Content-Type": "application/json"
+      },
+      body:JSON.stringify({Answers})
     });
     const data = await response.json();
     console.log(data);
@@ -248,7 +278,7 @@ const Stustate = (props) => {
   }
   return (
     <>
-      <Stucontext.Provider value={{ profile, setprofile, fetchprofile, loading, setloading, add_project, update_project, delete_project, add_education, update_education, delete_education, add_experience, update_experience, delete_experience, Alldrives, fetchAlldrives, ApplyDrive, DriveStu, setDriveStu, fetchSelectedStu }}>
+      <Stucontext.Provider value={{ profile, setprofile, fetchprofile, loading, setloading, add_project, update_project, delete_project, add_education, update_education, delete_education, add_experience, update_experience, delete_experience, Alldrives, fetchAlldrives, ApplyDrive, DriveStu, setDriveStu, fetchSelectedStu,fetchDriveDetails,Drive }}>
         {props.children}
       </Stucontext.Provider>
     </>

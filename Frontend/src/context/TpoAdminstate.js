@@ -150,7 +150,7 @@ const TpoAdminstate = (props) => {
             }
         });
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setDriveStu(data.students);
         setloading(false);
     }
