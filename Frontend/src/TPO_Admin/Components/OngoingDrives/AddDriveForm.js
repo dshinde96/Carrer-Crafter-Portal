@@ -63,7 +63,7 @@ const Signup = () => {
                         <input type="text" className="form-control" name="EligibilityCriteria" id="exampleInputPassword1" onChange={handle_change} />
                     </div>
 
-                    <div>
+                    <div className="form-label">
                         {drive.Questions.map((Que)=><p>{Que}</p>)}
                     </div>
                     <div>

@@ -1,17 +1,17 @@
 const jwt = require("jsonwebtoken");
 const fs=require('fs');
-let secretKey="";
+let secretKey=process.env.secretKey;
 
 //read the secretkey from the file
-fs.readFile('../Private/Private.txt','utf-8',(err,res)=>{
-    if(err)
-    {
-        console.log(err);
-    }
-    else{
-        secretKey=res;
-    }
-});
+// fs.readFile('../Private/Private.txt','utf-8',(err,res)=>{
+//     if(err)
+//     {
+//         console.log(err);
+//     }
+//     else{
+//         secretKey=res;
+//     }
+// });
 
 const generateTocken = (user) => {
     try {
@@ -40,11 +40,13 @@ const generateTocken = (user) => {
                 role: user.role
             }
             const authTocken = jwt.sign(payload, secretKey);
+            console.log(authTocken);
             return authTocken;
         }
     }
     catch (error) {
-        return res.status(500).send({ msg: "Internal Server Error" });
+        console.log(error)
+        return ;
     }
 };
 
@@ -53,7 +55,8 @@ const validateTocken = (authTocken) => {
         const payload = jwt.verify(authTocken, secretKey);
         return payload;
     } catch (error) {
-        return res.status(500).send({ msg: "Internal Server Error" });
+        console.log(error)
+        return new Error(error);
     }
 };
 

@@ -34,7 +34,7 @@ const handleSendVerificationOTP = async (req, res) => {
                 <p>Dear user, your OTP for email verification is ${otp.otp}</p>
                 `;
     await SendMail([email], Subject, content);
-    res.json({msg:"OTP sent to provided email address"});
+    res.json({msg:"OTP Has Been Sent To Provided Email Address"});
 
 }
 

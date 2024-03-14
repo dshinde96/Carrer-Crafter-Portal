@@ -9,6 +9,8 @@ const Signup = () => {
     const [OTP,setOTP]=useState();
     const [OtpMsg,setOtpMsg]=useState("");
     const [emailVerify,setemailVerify]=useState(false);
+    const [optbtn,setOtpbtn]=useState(false);
+
     const [registrationMsg,setregistrationMsg]=useState("");
     const [user, setuser] = useState({ reg_no: 0, name: "", email: "", mob_no: 0, dob: "", dept: "", year: "", password: "" });
     const {urlHead}=useContext(LoadContext)
@@ -42,6 +44,7 @@ const Signup = () => {
         });
         const data = await response.json();
         setOtpMsg(data.msg);
+        setOtpbtn(true)
     }
     const VerifyOTP=async()=>{
         const url = `${urlHead}/user/VerifyOTP`;
@@ -77,13 +80,21 @@ const Signup = () => {
                         <input type="text" className="form-control" id="exampleInputEmail1" name="name" onChange={handle_change} />
                     </div>
 
-                    <div>
-                        <p>{OtpMsg}</p>
-                        <label>Email Address</label>
-                        <input type="email" name="email" onChange={handle_change}/>
-                        <button className="btn-primary" type="button" onClick={GenerateOTP}>Generate OTP</button>
-                        <input type="text" name="OTP" onChange={(e)=>setOTP(e.target.value)}/>
-                        <button className="btn-primary" type="button" onClick={VerifyOTP}>Submit</button>
+                    <div className="">
+                        <p className="mt-3 pl-2 fs-6 text-danger">{OtpMsg}</p>
+                        <label htmlFor="exampleInputEmail1" className="form-label">Email Address</label>
+                        <input type="email" name="email" className="form-control" id="exampleInputEmail1"  onChange={handle_change}/>
+                        <div className="mt-3 d-flex gap-5 mb-3">
+
+                        <button className="btn btn-primary" type="button" onClick={GenerateOTP}>Generate OTP</button>
+                        {
+                            optbtn?
+                         <>
+                        <input type="text" className="form-control " style={{width:"10rem"}} name="OTP" onChange={(e)=>setOTP(e.target.value) }/>
+                        <button className="btn btn-primary" type="button" onClick={VerifyOTP}>Submit</button>
+                            </>:<></>
+                        }
+                        </div>
                     </div>
                     {/* <div>
                         <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
@@ -92,7 +103,7 @@ const Signup = () => {
                     </div> */}
 
                     <div>
-                        <label htmlFor="exampleInputEmail1" className="form-label">Mobile Number</label>
+                        <label htmlFor="exampleInputEmail1" className="form-label ">Mobile Number</label>
                         <input type="Number" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="mob_no" onChange={handle_change} />
                         <div id="emailHelp" className="form-text">We'll never share your Mobile Number with anyone else.</div>
                     </div>
@@ -103,7 +114,7 @@ const Signup = () => {
                     </div>
 
                     <div className="mb-3">
-                        <select name="dept" className='Dropdown' id="dept-Dropdown" onChange={handle_change}>
+                        <select name="dept" className='Dropdown form-select' id="dept-Dropdown" onChange={handle_change}>
                             <option value="" className='options'>Select Department</option>
                             <option value="Information Technology" className='options'>Information Technology</option>
                             <option value="Mechanical Engineering" className='options'>Mechanical Engineering</option>
@@ -114,7 +125,7 @@ const Signup = () => {
                     </div>
 
                     <div className="mb-3">
-                        <select name="year" className='Dropdown' id="dept-Dropdown" onChange={handle_change}>
+                        <select name="year" className='Dropdown form-select' id="dept-Dropdown" onChange={handle_change}>
                             <option value="" className='options'>Year of Study</option>
                             <option value="First Year" className='options'>First Year</option>
                             <option value="Second Year" className='options'>Second Year</option>

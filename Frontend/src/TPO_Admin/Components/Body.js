@@ -14,7 +14,7 @@ const Body = () => {
                 <div className=" rounded" style={{width:'50%'}} id="drives">
                     <h2 className="text-center text-ehite">Upcoming Drives...</h2>
                     <ul className="list-group">
-                    {Alldrives.map((ele) => <li className="list-group-item">{ele.CompanyName}</li>)}
+                    {Alldrives && Alldrives.map((ele) => <li className="list-group-item">{ele.CompanyName}</li>)}
                     </ul>
 
                 </div>

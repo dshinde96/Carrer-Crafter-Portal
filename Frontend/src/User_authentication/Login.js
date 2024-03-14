@@ -57,7 +57,9 @@ const Login = (props) => {
         <>
             <Header/>
             <Navbar/>
-            <form style={{ marginTop: "100px" }}>
+            <div className="d-flex justify-content-center">
+
+            <form style={{ marginTop: "100px",width:"40vw" }}>
                 <div className="alert">
                     {invalidcred ? <div class="alert alert-primary  d-flex justify-content-between" role="alert">
                         <h5>Invalid credentials...Please try again </h5><i className="fa fa-trash delete_btn" title="Delete Item" onClick={() => { setinvalidcred(false) }}></i>
@@ -75,16 +77,17 @@ const Login = (props) => {
                         <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                         <input type="password" className="form-control" name="password" id="exampleInputPassword1" onChange={handle_change} />
                     </div>
-                    <div className="loginDropdown">
-                    <select name="" className='Dropdown' id="dept-Dropdown" value={props.role} onChange={(event)=>{props.setrole(event.target.value)}}>
+                    <div className="loginDropdown for">
+                    <select name="" className='Dropdown form-select'  value={props.role} onChange={(event)=>{props.setrole(event.target.value)}}>
                         <option value="Student" className='options'>Student</option>
                         <option value="TPO_Dept_Admin" className='options'>TPO Department Login</option>
                         <option value="TPO_Admin" className='options'>TPO Admin</option>
                     </select>
                 </div>
-                    <button className=" bg-red-300 h-10 w-20 rounded-md" type="button" onClick={()=>{Add_user()}}>Login</button>
+                    <button className=" bg-red-300 h-10 w-20 btn rounded-md mt-3 justify-center" type="button" onClick={()=>{Add_user()}}>Login</button>
                 </div>
             </form>
+            </div>
         </>
     )
 }
