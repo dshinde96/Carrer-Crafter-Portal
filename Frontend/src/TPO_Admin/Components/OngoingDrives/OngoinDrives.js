@@ -19,7 +19,7 @@ const Drives_cnt = () => {
                 <button type="button" class="btn btn-primary mx-2 my-2" onClick={()=>navigate('/Drive/AddDrive')}><i class="fa fa-plus mx-2"></i><h6 style={{display:"inline"}}>New Drive</h6></button>
                 </div>
                 <h4>Ongoing Drives</h4>
-                {Alldrives.map((ele) => <DriveItem Drive={ele}/>)}
+                {Alldrives && Alldrives.map((ele) => <DriveItem Drive={ele}/>)}
             </div>
         </>
     )
