@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../Student_view/Components/Header";
+import Header from "../Header/Header";
 import Navbar from "./Navbar";
 import LoadContext from "../context/loadContext";
 
@@ -44,7 +44,7 @@ const Signup = () => {
         });
         const data = await response.json();
         setOtpMsg(data.msg);
-        setOtpbtn(true)
+        setOtpbtn(true);
     }
     const VerifyOTP=async()=>{
         const url = `${urlHead}/user/VerifyOTP`;

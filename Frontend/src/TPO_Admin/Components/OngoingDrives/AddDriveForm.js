@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../Header"
+import Header from "../../../Header/Header";
 import Navbar from "../Navbar"
 import TpoAdminContext from "../../../context/TpoAdminstate";
 

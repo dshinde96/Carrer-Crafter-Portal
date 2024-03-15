@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import './Login.css';
 import loadContext from "../context/loadContext";
-import Header from "../Student_view/Components/Header";
+import Header from "../Header/Header";
 import Navbar from "./Navbar";
 const Login = (props) => {
     const {setloading,urlHead}=useContext(loadContext)
-    const [invalidcred, setinvalidcred] = useState(false);
+    const [errMsg, setErrMsg] = useState("");
     const [user, setuser] = useState({ reg_no: "", password: "" });
     const navigate = useNavigate();
     const handle_change = (e) => {
@@ -34,11 +33,12 @@ const Login = (props) => {
             });
         }
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
+        // console.log(data);
         if (response.status !== 200) {
             sessionStorage.setItem('tocken', '');
             sessionStorage.setItem('user', '');
-            setinvalidcred(true);
+            setErrMsg(data.msg);
         }
         else {
             sessionStorage.setItem('tocken', data.tocken);
@@ -60,11 +60,7 @@ const Login = (props) => {
             <div className="d-flex justify-content-center">
 
             <form style={{ marginTop: "100px",width:"40vw" }}>
-                <div className="alert">
-                    {invalidcred ? <div class="alert alert-primary  d-flex justify-content-between" role="alert">
-                        <h5>Invalid credentials...Please try again </h5><i className="fa fa-trash delete_btn" title="Delete Item" onClick={() => { setinvalidcred(false) }}></i>
-                    </div> : ""}
-                </div>
+                
                 <div className="container">
                     <h2>Login</h2>
 
@@ -83,6 +79,9 @@ const Login = (props) => {
                         <option value="TPO_Dept_Admin" className='options'>TPO Department Login</option>
                         <option value="TPO_Admin" className='options'>TPO Admin</option>
                     </select>
+                    <div className="ErrMsg">
+                        <p>{errMsg}</p>
+                    </div>
                 </div>
                     <button className=" bg-red-300 h-10 w-20 btn rounded-md mt-3 justify-center" type="button" onClick={()=>{Add_user()}}>Login</button>
                 </div>

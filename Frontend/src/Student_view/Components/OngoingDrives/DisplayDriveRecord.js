@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Spinner from "../../../Spinner/Spinner";
-import Header from "../Header";
+import Header from "../../../Header/Header";
 import Navbar from "../Navbar";
 import { useParams } from "react-router-dom";
 import Row from "./row";

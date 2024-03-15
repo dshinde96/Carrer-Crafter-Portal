@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken");
 const fs=require('fs');
-let secretKey=process.env.secretKey;
+require('dotenv').config()
+let secretKey=process.env.secretkey;
 
-//read the secretkey from the file
+// read the secretkey from the file
 // fs.readFile('../Private/Private.txt','utf-8',(err,res)=>{
 //     if(err)
 //     {
@@ -13,7 +14,7 @@ let secretKey=process.env.secretKey;
 //     }
 // });
 
-const generateTocken = (user) => {
+const generateTocken = (user , req , res) => {
     try {
         if (user.role == "Student") {
             const payload = {
@@ -40,13 +41,11 @@ const generateTocken = (user) => {
                 role: user.role
             }
             const authTocken = jwt.sign(payload, secretKey);
-            console.log(authTocken);
             return authTocken;
         }
     }
     catch (error) {
-        console.log(error)
-        return ;
+        return res.status(500).send({ msg: "Internal Server Error" });
     }
 };
 
@@ -55,8 +54,7 @@ const validateTocken = (authTocken) => {
         const payload = jwt.verify(authTocken, secretKey);
         return payload;
     } catch (error) {
-        console.log(error)
-        return new Error(error);
+        return res.status(500).send({ msg: "Internal Server Error" });
     }
 };
 

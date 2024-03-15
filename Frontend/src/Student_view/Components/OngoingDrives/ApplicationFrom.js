@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import stucontext from "../../../context/stucontext";
 import Spinner from "../../../Spinner/Spinner";
-import Header from "../Header";
+import Header from "../../../Header/Header";
 import Navbar from "../Navbar";
 
 const Applicationform_cnt = (props) => {

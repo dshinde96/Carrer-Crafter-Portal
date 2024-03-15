@@ -1,4 +1,4 @@
-import Header from "../Header";
+import Header from "../../../Header/Header";
 import Navbar from "../Navbar";
 import { useContext, useEffect } from "react";
 import stucontext from "../../../context/stucontext";

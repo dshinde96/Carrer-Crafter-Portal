@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import TpoDeptcontext from "../../../context/TpoDeptstate";
-import Header from "../Header";
+import Header from "../../../Header/Header";
 import Navbar from "../Navbar";
 import Spinner from "../../../Spinner/Spinner";
 import Row from './row'

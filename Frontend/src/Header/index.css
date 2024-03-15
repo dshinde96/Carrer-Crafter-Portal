@@ -1,0 +1,37 @@
+
+.header-container{
+    display: flex;
+    align-items: center;
+    gap:240px;
+    height:150px;
+    background-color: rgb(200, 236, 247);
+}
+
+.logo-container{
+    max-width:200px;
+    padding-left: 150px;
+}
+
+.logo{
+    height: 180px;
+    border-radius: 10px;
+
+}
+
+.text-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 900px;
+}
+
+.text-container h1{
+    color: #0193CD;
+}
+
+.text-container h3{
+    color: #8DC73E;
+}
+
+

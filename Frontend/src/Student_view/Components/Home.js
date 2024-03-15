@@ -1,4 +1,4 @@
-import Header from './Header';
+import Header from '../../Header/Header';
 import Navbar from './Navbar';
 import Body from './Body';
 import { useEffect,useContext } from 'react';
