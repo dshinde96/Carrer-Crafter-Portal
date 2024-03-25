@@ -1,6 +1,6 @@
-# TPO Portal Management
+# Carrer Crafter Portal
 
-Welcome to the **TPO Portal Management** repository, a centralized web application designed to streamline the campus placement process. This repository contains the source code, documentation, and essential resources for deploying and managing the TPO Portal.
+The goal of the Career Crafter Portal project was to address the inefficiencies and challenges faced by colleges and companies in managing placement processes. The project aimed to provide a comprehensive solution that simplifies data management, streamlines on-campus drive processes, and enhances the overall efficiency of the placement ecosystem. By bridging the gap between colleges and companies, the project sought to facilitate seamless interactions, improve transparency, and optimize the recruitment process for both stakeholders.
 
 ## Features
 
