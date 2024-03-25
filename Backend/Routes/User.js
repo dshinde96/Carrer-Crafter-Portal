@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const { AuthenticateUser, restrictTo } = require('../Middleware/Authentication');
+const { body, validationResult } = require('express-validator');
 
 
 
 const {handleRegisterStu,handleRegisterAdmin,handleLogin,handleRegistrationReq,handleReqAcept,handleReqReject,handleGetAllStu,handleUpdatePersonalDet,handleSendVerificationOTP,handleVerifyOTP}=require('../Controllers/UserController');
 
-router.post('/SendVerificationOTP',handleSendVerificationOTP);
+router.post('/SendVerificationOTP',body('email', "Enter a valid Email").isEmail(),handleSendVerificationOTP);
 
-router.post('/VerifyOTP',handleVerifyOTP);
+router.post('/VerifyOTP',body('otp', "Enter a valid Email").notEmpty(),handleVerifyOTP);
 //router:POST:/RegisterStu:=>Register new student => No login require (Public URL)
 router.post('/RegisterStu', handleRegisterStu);
 

@@ -12,44 +12,62 @@ const { SendMail } = require('../Services/MailSender');
 const OTP = require('../Models/OTP')
 
 const handleSendVerificationOTP = async (req, res) => {
-    const { email } = req.body;
-    // console.log(email);
-    const Student = await User_stu.findOne({ email });
-    // console.log(Student);
-    if (Student){
-        return res.status(401).json({ msg: "Provided email is already registered" });
-    }
+    try {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            return res.status(401).json({ msg: "Please Enter a Valid Email address." });
+        }
+        const { email } = req.body;
+        // console.log(email);
+        const Student = await User_stu.findOne({ email });
+        // console.log(Student);
+        if (Student) {
+            return res.status(401).json({ msg: "Provided email is already registered" });
+        }
 
-    const checkOTP=await OTP.findOne({ email });
-    if(checkOTP){
-        return res.status(401).json({ msg: "OTP already sent to mentioned email" });
-    }
-    const otp = await OTP.create({
-        email,
-        otp: Math.floor(1 + (Math.random() * 10000))
-    });
+        const checkOTP = await OTP.findOne({ email });
+        if (checkOTP) {
+            return res.status(401).json({ msg: "OTP already sent to mentioned email" });
+        }
+        const otp = await OTP.create({
+            email,
+            otp: Math.floor(1 + (Math.random() * 10000))
+        });
 
-    const Subject = `OTP Generated Successfully!`;
-    const content = `
+        const Subject = `OTP Generated Successfully!`;
+        const content = `
                 <p>Dear user, your OTP for email verification is ${otp.otp}</p>
                 `;
-    await SendMail([email], Subject, content);
-    res.json({msg:"OTP Has Been Sent To Provided Email Address"});
+        await SendMail([email], Subject, content);
+        res.json({ msg: "OTP Has Been Sent To Provided Email Address" });
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({ msg: "Internal Server Error" });
+    }
 
 }
 
-const handleVerifyOTP=async(req,res)=>{
-    const {email,otp}=req.body;
-    // console.log(otp);
-    const otpDB=await OTP.findOne({email});
-    // console.log(otpDB.otp);
-    if(!otpDB){
-        return res.status(401).json({msg:"Regenrate the OTP"});
+const handleVerifyOTP = async (req, res) => {
+    try {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            return res.status(401).json({ msg: "OTP field cannot be empty." });
+        }
+        const { email, otp } = req.body;
+        // console.log(otp);
+        const otpDB = await OTP.findOne({ email });
+        // console.log(otpDB.otp);
+        if (!otpDB) {
+            return res.status(401).json({ msg: "Regenrate the OTP" });
+        }
+        if (otpDB.otp.toString() === otp)
+            return res.json({ msg: "Email verified!", Verfied: true });
+        else
+            return res.status(401).json({ msg: "Wrong OTP", Verfied: false });
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({ msg: "Internal Server Error" });
     }
-    if(otpDB.otp.toString()===otp)
-    return res.json({msg:"Email verified!",Verfied:true});
-    else
-    return res.status(401).json({msg:"Wrong OTP",Verfied:false});
 }
 
 const handleRegisterStu = async (req, res) => {
@@ -204,6 +222,7 @@ const handleLogin = async (req, res) => {
     try {
         const { role } = req.body;
         if (role == "Student") {
+            console.log(req.body);
             const { reg_no, password } = req.body;
             const stu = await User_stu.findOne({ reg_no });
             // console.log(stu);
@@ -458,4 +477,4 @@ const handleUpdatePersonalDet = async (req, res) => {
         return res.status(500).send({ msg: "Internal Server error" });
     }
 }
-module.exports = { handleRegisterStu, handleRegisterAdmin, handleLogin, handleRegistrationReq, handleReqAcept, handleReqReject, handleGetAllStu, handleUpdatePersonalDet,handleSendVerificationOTP, handleVerifyOTP };
+module.exports = { handleRegisterStu, handleRegisterAdmin, handleLogin, handleRegistrationReq, handleReqAcept, handleReqReject, handleGetAllStu, handleUpdatePersonalDet, handleSendVerificationOTP, handleVerifyOTP };

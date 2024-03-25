@@ -70,34 +70,39 @@ const handleNewDrive = async (req, res) => {
 }
 
 const handleApplyToDrive = async (req, res) => {
-    const drive = await Drives.findById(req.params.id);
-    // console.log(drive);
-    if (!drive) {
-        return res.status(404).send({ msg: "Drives not found" });
+    try {
+        const drive = await Drives.findById(req.params.id);
+        // console.log(drive);
+        if (!drive) {
+            return res.status(404).send({ msg: "Drives not found" });
+        }
+        let stu = await User_stu.findById(req.user.id);
+        if (!stu) {
+            return res.status(404).json({ msg: "User not valid" });
+        }
+        if (!drive.EligibleDepartMents.includes(stu.dept) || !drive.EligibleYears.includes(stu.year)) {
+            return res.status(401).json({ msg: "Not Eligible to apply to this Drive" });
+        }
+        let isapplied = stu.applicationHistory.find((appl) => appl.DriveId.toString() === req.params.id);
+        if (isapplied) {
+            return res.send({ msg: "You have already applied for the drive" });
+        }
+        const { Answers } = req.body;
+        const application = await Applications.create({
+            DriveId: drive._id,
+            StudentId: req.user.id,
+            Answers
+        });
+        console.log(application);
+        drive.InterestedStu.push({ StuId: req.user.id, ApplicationID: application._id });
+        await Drives.findByIdAndUpdate(req.params.id, { $set: drive });
+        stu.applicationHistory.push({ DriveId: req.params.id, ApplicationId: application._id, status: "Applied, Awaiting TPO approval" });
+        await User_stu.findByIdAndUpdate(req.user.id, { $set: stu });
+        res.send({ stu, msg: "Applied Successfully" });
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({ msg: "Internal Server Error" });
     }
-    let stu = await User_stu.findById(req.user.id);
-    if (!stu) {
-        return res.status(404).json({ msg: "User not valid" });
-    }
-    if (!drive.EligibleDepartMents.includes(stu.dept) || !drive.EligibleYears.includes(stu.year)) {
-        return res.status(401).json({ msg: "Not Eligible to apply to this Drive" });
-    }
-    let isapplied = stu.applicationHistory.find((appl) => appl.DriveId.toString() === req.params.id);
-    if (isapplied) {
-        return res.send({ msg: "You have already applied for the drive" });
-    }
-    const { Answers } = req.body;
-    const application = await Applications.create({
-        DriveId: drive._id,
-        StudentId: req.user.id,
-        Answers
-    });
-    console.log(application);
-    drive.InterestedStu.push({ StuId: req.user.id, ApplicationID: application._id });
-    await Drives.findByIdAndUpdate(req.params.id, { $set: drive });
-    stu.applicationHistory.push({ DriveId: req.params.id, ApplicationId: application._id, status: "Applied, Awaiting TPO approval" });
-    await User_stu.findByIdAndUpdate(req.user.id, { $set: stu });
-    res.send({ stu, msg: "Applied Successfully" });
 }
 
 const handleGetSelectedStu = async (req, res) => {
@@ -166,7 +171,7 @@ const handleDriveStudent = async (req, res) => {
                     path: "InterestedStu.ApplicationID"
                 });
             // return res.json({drive});
-            await Promise.all(drive.InterestedStu.map(async (stu,index) => {
+            await Promise.all(drive.InterestedStu.map(async (stu, index) => {
                 let Student = {
                     "profile": {
                         _id: stu.StuId._id,
@@ -235,7 +240,7 @@ const handleDriveStudent = async (req, res) => {
                     path: "SelectedStu.ApplicationID"
                 });
             // return res.json({drive});
-            await Promise.all(drive.SelectedStu.map(async (stu,index) => {
+            await Promise.all(drive.SelectedStu.map(async (stu, index) => {
                 let Student = {
                     "profile": {
                         _id: stu.StuId._id,
@@ -262,75 +267,86 @@ const handleDriveStudent = async (req, res) => {
 }
 
 const handleAddEligibleStu = async (req, res) => {
-    let drive = await Drives.findById(req.params.id);
-    if (!drive) {
-        res.status(404).send({ msg: "Not found" });
-    }
-    const { selectedStuid } = req.body;
-    // console.log(req.body);
-    let Student = await User_stu.findById(selectedStuid);
-    if (!Student) {
-        return res.status(404).send({ msg: "Student not found" })
-    }
-    const application = drive.InterestedStu.find((stu) => stu.StuId.toString() === selectedStuid);
-    if (!application) {
-        return res.send({ msg: "Student did not applied for this drive" })
-    }
-    if (drive.EligibleStu.find((stu) => stu.StuId.toString() === selectedStuid)) {
-        return res.send({ msg: "Student already add to eligible" })
-    }
-    Student.applicationHistory.find((application) => {
-        // console.log(application);
-        if (application.DriveId.toString() === req.params.id) {
-            // console.log(application.status);
-            application.status = "Apporved by TPO, Further process will be initialised soon";
+    try {
+        let drive = await Drives.findById(req.params.id);
+        if (!drive) {
+            res.status(404).send({ msg: "Not found" });
         }
-    });
-    await User_stu.findByIdAndUpdate(selectedStuid, { $set: Student });
-    drive.EligibleStu.push(application);
-    drive.InterestedStu = drive.InterestedStu.filter((stu) => stu.StuId != selectedStuid);
-    await Drives.findByIdAndUpdate(req.params.id, { $set: drive });
-    res.send({ drive, msg: "Student Added Successfully" });
-    // selectedStu.map(async(id)=>{
+        const { selectedStuid } = req.body;
+        // console.log(req.body);
+        let Student = await User_stu.findById(selectedStuid);
+        if (!Student) {
+            return res.status(404).send({ msg: "Student not found" })
+        }
+        const application = drive.InterestedStu.find((stu) => stu.StuId.toString() === selectedStuid);
+        if (!application) {
+            return res.send({ msg: "Student did not applied for this drive" })
+        }
+        if (drive.EligibleStu.find((stu) => stu.StuId.toString() === selectedStuid)) {
+            return res.send({ msg: "Student already add to eligible" })
+        }
+        Student.applicationHistory.find((application) => {
+            // console.log(application);
+            if (application.DriveId.toString() === req.params.id) {
+                // console.log(application.status);
+                application.status = "Apporved by TPO, Further process will be initialised soon";
+            }
+        });
+        await User_stu.findByIdAndUpdate(selectedStuid, { $set: Student });
+        drive.EligibleStu.push(application);
+        drive.InterestedStu = drive.InterestedStu.filter((stu) => stu.StuId != selectedStuid);
+        await Drives.findByIdAndUpdate(req.params.id, { $set: drive });
+        res.send({ drive, msg: "Student Added Successfully" });
+        // selectedStu.map(async(id)=>{
 
-    // })
+        // })
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({ msg: "Internal Server Error" });
+    }
 }
 
 const handleAddSelectedStu = async (req, res) => {
-    let drive = await Drives.findById(req.params.id);
-    if (!drive) {
-        res.status(404).send({ msg: "Not found" });
-    }
-    const { selectedStuid } = req.body;
-    let Student = await User_stu.findById(selectedStuid);
-    if (!Student) {
-        return res.status(404).send({ msg: "Student not found" })
-    }
-    const application = drive.EligibleStu.find((stu) => stu.StuId.toString() === selectedStuid);
-    if (!application) {
-        return res.send({ msg: "Student is not approved by tpo" });
-    }
-    if (drive.SelectedStu.find((stu) => stu.StuId.toString() === selectedStuid)) {
-        return res.send({ msg: "Student is already selected in the drive" });
-    }
-    Student.placed = true;
-    Student.CompanyName.push(drive.CompanyName);
-    Student.applicationHistory.find((application) => {
-        // console.log(application);
-        if (application.DriveId.toString() === req.params.id) {
-            // console.log(application.status);
-            application.status = "Selected";
+    try {
+        let drive = await Drives.findById(req.params.id);
+        if (!drive) {
+            res.status(404).send({ msg: "Not found" });
         }
-    });
-    await User_stu.findByIdAndUpdate(selectedStuid, { $set: Student });
-    drive.SelectedStu.push(application);
-    drive.EligibleStu = drive.EligibleStu.filter((stu) => stu.StuId != selectedStuid);
-    await Drives.findByIdAndUpdate(req.params.id, { $set: drive });
-    res.send({ drive, msg: "Student Added Successfully" });
+        const { selectedStuid } = req.body;
+        let Student = await User_stu.findById(selectedStuid);
+        if (!Student) {
+            return res.status(404).send({ msg: "Student not found" })
+        }
+        const application = drive.EligibleStu.find((stu) => stu.StuId.toString() === selectedStuid);
+        if (!application) {
+            return res.send({ msg: "Student is not approved by tpo" });
+        }
+        if (drive.SelectedStu.find((stu) => stu.StuId.toString() === selectedStuid)) {
+            return res.send({ msg: "Student is already selected in the drive" });
+        }
+        Student.placed = true;
+        Student.CompanyName.push(drive.CompanyName);
+        Student.applicationHistory.find((application) => {
+            // console.log(application);
+            if (application.DriveId.toString() === req.params.id) {
+                // console.log(application.status);
+                application.status = "Selected";
+            }
+        });
+        await User_stu.findByIdAndUpdate(selectedStuid, { $set: Student });
+        drive.SelectedStu.push(application);
+        drive.EligibleStu = drive.EligibleStu.filter((stu) => stu.StuId != selectedStuid);
+        await Drives.findByIdAndUpdate(req.params.id, { $set: drive });
+        res.send({ drive, msg: "Student Added Successfully" });
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({ msg: "Internal Server Error" });
+    }
 }
 
 const handleRejectStu = async (req, res) => {
-    let drive = await Drives.findById(req.params.id);
+    try {
+        let drive = await Drives.findById(req.params.id);
     if (!drive) {
         res.status(404).send({ msg: "Not found" });
     }
@@ -359,5 +375,9 @@ const handleRejectStu = async (req, res) => {
     // selectedStu.map(async(id)=>{
 
     // })
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({msg:"Internal Server Error"});
+    }
 }
 module.exports = { handleGetAllDrive, handleDisplayDrive, handleNewDrive, handleApplyToDrive, handleGetSelectedStu, handleDriveStudent, handleAddEligibleStu, handleAddSelectedStu, handleRejectStu };

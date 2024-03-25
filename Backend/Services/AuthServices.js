@@ -14,9 +14,10 @@ let secretKey=process.env.secretkey;
 //     }
 // });
 
-const generateTocken = (user , req , res) => {
+const generateTocken = (user) => {
     try {
         if (user.role == "Student") {
+            console.log(secretKey);
             const payload = {
                 id: user.id,
                 name: user.name,
@@ -45,7 +46,9 @@ const generateTocken = (user , req , res) => {
         }
     }
     catch (error) {
-        return res.status(500).send({ msg: "Internal Server Error" });
+        // return res.status(500).send({ msg: "Internal Server Error" });
+        console.log(error.message);
+        return null;
     }
 };
 

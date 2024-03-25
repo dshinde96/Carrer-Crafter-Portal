@@ -11,7 +11,7 @@ const SendMail = async (email,subject,content) => {
         });
 
         const info = await transporter.sendMail({
-            from: '"GCEK TPO" <gcekTPO@gmail.com>',
+            from: '"Connect2Campus.GCEK" <Connect2Campus.GCEK>',
             to: email,
             subject: subject,
             html:content
