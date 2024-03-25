@@ -11,7 +11,7 @@ const SendMail = async (email,subject,content) => {
         });
 
         const info = await transporter.sendMail({
-            from: '"Connect2Campus.GCEK" <Connect2Campus.GCEK>',
+            from: '"Carrer Crafter Portal- GCEK" <Connect2Campus.GCEK.com>',
             to: email,
             subject: subject,
             html:content
