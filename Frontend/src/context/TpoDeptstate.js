@@ -77,7 +77,7 @@ const TpoDeptstate = (props) => {
     }
 
     const acceptReq = async (id, Remark) => {
-        const url = `${urlHead}/user/req_accept/${id}`;
+        const url = `${urlHead}/user/registration_req/${id}`;
         const response = await fetch(url, {
             method: "POST",
             headers: {
@@ -91,10 +91,10 @@ const TpoDeptstate = (props) => {
     }
 
     const rejectReq = async (id, Remark) => {
-        const url = `${urlHead}/user/req_reject/${id}`;
+        const url = `${urlHead}/user/registration_req/${id}`;
         console.log(Remark);
         const response = await fetch(url, {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 "User-Agent": "Thunder Client (https://www.thunderclient.com)",
                 "auth-tocken": `${sessionStorage.getItem('tocken')}`,

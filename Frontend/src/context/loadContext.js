@@ -9,7 +9,7 @@ const Loadstate = (props) => {
       <LoadContext.Provider value={{loading,setloading,urlHead}}>
         {props.children}
       </LoadContext.Provider>
-    </>
+    </> 
   )
 }
 export default LoadContext;

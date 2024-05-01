@@ -12,13 +12,9 @@ const handleMyProfile = async (req, res) => {
         .populate({ path: "Experience", select: "Array" })
         .populate({ path: "Project", select: "Array" })
         .select("-password -reg_no -role -dob");
-        // console.log((student));
         if (!student) {
             return res.status(404).send({ msg: "Not found" });
         }
-        // const projects = await Project.find({ user: req.user.id });
-        // const education = await Education.find({ user: req.user.id });
-        // const experience = await Experience.find({ user: req.user.id });
         return res.send({ student, msg: "Profile fetched successfully" });
     } catch (error) {
         console.log(error.message);
@@ -34,7 +30,6 @@ const handleDisplayProfile = async (req, res) => {
         .populate({ path: "Experience", select: "Array" })
         .populate({ path: "Project", select: "Array" })
         .select("-password");
-        // console.log((student));
         if (!student) {
             return res.status(404).send({ msg: "Not found" });
         }
@@ -120,39 +115,39 @@ const handleDeleteProject = async (req, res) => {
 
 }
 
-// const handleAddEdu = async (req, res) => {
-//     try {
-//         const { title, school, start_year, end_year, percentage } = req.body;
-//         const {Education} = await User_stu.findById(req.params.id)
-//         .populate({ path: "Education"});
-//         const education={title, school, start_year, end_year, percentage};
-//         Education.Array.push(education);
-//         await Education.save();
-//         return res.send({ education: edu, msg: "education saved successfully" });
-//     } catch (error) {
-//         console.log(error.message);
-//         return res.status(500).send({ msg: "Internal Server error" });
-//     }
+const handleAddEdu = async (req, res) => {
+    try {
+        const { title, school, start_year, end_year, percentage } = req.body;
+        const {Education} = await User_stu.findById(req.params.id)
+        .populate({ path: "Education"});
+        const education={title, school, start_year, end_year, percentage};
+        Education.Array.push(education);
+        await Education.save();
+        return res.send({ education: edu, msg: "education saved successfully" });
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).send({ msg: "Internal Server error" });
+    }
 
-// }
+}
 
-// const deleteEdu = async (req, res) => {
-//     try {
-//         const education = await Education.findById(req.params.id);
-//         if (!education) {
-//             return res.status(404).send({ msg: "education not found" });
-//         }
-//         if (education.user.toString() !== req.user.id) {
-//             return res.status(401).send({ msg: "Access denied" });
-//         }
-//         await Education.findByIdAndDelete(req.params.id);
-//         return res.send({ edu: education, msg: "Education deleted successfully" });
-//     } catch (error) {
-//         console.log(error.message);
-//         return res.status(500).send({ msg: "Internal Server error" });
-//     }
+const deleteEdu = async (req, res) => {
+    try {
+        const education = await Education.findById(req.params.id);
+        if (!education) {
+            return res.status(404).send({ msg: "education not found" });
+        }
+        if (education.user.toString() !== req.user.id) {
+            return res.status(401).send({ msg: "Access denied" });
+        }
+        await Education.findByIdAndDelete(req.params.id);
+        return res.send({ edu: education, msg: "Education deleted successfully" });
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).send({ msg: "Internal Server error" });
+    }
 
-// }
+}
 
 const handleUpdateEdu = async (req, res) => {
     try {

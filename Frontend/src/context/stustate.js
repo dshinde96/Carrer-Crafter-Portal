@@ -60,7 +60,7 @@ const Stustate = (props) => {
   const add_project = async (project) => {
     const { title, description, start_date, end_date } = project;
     // console.log(project);
-    const url = `${urlHead}/student/profile/addproject`;
+    const url = `${urlHead}/student/profile/project`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -76,9 +76,9 @@ const Stustate = (props) => {
   }
   const update_project = async (id, newproject) => {
 
-    const url = `${urlHead}/Student/profile/updateproject/${id}`;
+    const url = `${urlHead}/Student/profile/project/${id}`;
     const response = await fetch(url, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "User-Agent": "Thunder Client (https://www.thunderclient.com)",
         "auth-tocken": `${sessionStorage.getItem('tocken')}`,
@@ -93,7 +93,7 @@ const Stustate = (props) => {
   }
 
   const delete_project = async (id) => {
-    const url = `${urlHead}/Student/profile/deleteproject/${id}`;
+    const url = `${urlHead}/Student/profile/project/${id}`;
     const response = await fetch(url, {
       method: "DELETE",
       headers: {
@@ -129,9 +129,9 @@ const Stustate = (props) => {
   const update_education = async (id, neweducation) => {
     // const { title, school, start_year, end_year,percentage } = neweducation;
 
-    const url = `${urlHead}/Student/profile/updateeducation/${id}`;
+    const url = `${urlHead}/Student/profile/education/${id}`;
     const response = await fetch(url, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "User-Agent": "Thunder Client (https://www.thunderclient.com)",
         "auth-tocken": `${sessionStorage.getItem('tocken')}`,
@@ -162,7 +162,7 @@ const Stustate = (props) => {
   const add_experience = async (exp) => {
     const { position, org, start_year, end_year } = exp;
     // console.log(project);
-    const url = `${urlHead}/Student/profile/addexp`;
+    const url = `${urlHead}/Student/profile/experience`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -180,9 +180,9 @@ const Stustate = (props) => {
   const update_experience = async (id, newexp) => {
     // const { title, school, start_year, end_year,percentage } = newexp;
 
-    const url = `${urlHead}/Student/profile/updateexp/${id}`;
+    const url = `${urlHead}/Student/profile/experience/${id}`;
     const response = await fetch(url, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "User-Agent": "Thunder Client (https://www.thunderclient.com)",
         "auth-tocken": `${sessionStorage.getItem('tocken')}`,
@@ -195,7 +195,7 @@ const Stustate = (props) => {
   }
 
   const delete_experience = async (id) => {
-    const url = `${urlHead}/Student/profile/deleteexp/${id}`;
+    const url = `${urlHead}/Student/profile/experience/${id}`;
     const response = await fetch(url, {
       method: "DELETE",
       headers: {
@@ -244,7 +244,7 @@ const Stustate = (props) => {
   const ApplyDrive = async (id,Answers) => {
     setloading(true);
     const url = `${urlHead}/Drive/Apply/${id}`;
-    console.log(id);
+    // console.log(id);
     const response = await fetch(url, {
       method: "POST",
       headers: {

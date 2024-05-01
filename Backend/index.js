@@ -12,10 +12,9 @@ var app=express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/user',require('./Routes/User'));
-app.use('/Student',require('./Routes/UserstuRoute'));
-app.use('/Drive',require('./Routes/Drive'));
-app.use('/PlacementStat',require('./Routes/PlacementStat'));
+app.use('/user',require('./Routes/UserRoute'));
+app.use('/Student',require('./Routes/ProfileRoute'));
+app.use('/Drive',require('./Routes/DriveRoute'));
 
 app.listen(PORT,()=>{
     console.log(`App listening on port ${PORT}`);

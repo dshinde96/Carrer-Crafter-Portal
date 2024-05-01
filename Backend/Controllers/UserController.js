@@ -100,21 +100,6 @@ const handleRegisterStu = async (req, res) => {
                     mob_no,
                     Reqtype: "RegisterNewStu"
                 });
-                // const transporter = nodemailer.createTransport({
-                //     service: 'gmail',
-                //     auth: {
-                //         user: 'gcek.tpo.server@gmail.com',
-                //         pass: 'wfpq hgjz xnha ypqc'
-                //     }
-                // });
-
-                // const info = await transporter.await SendMail({
-                //     from: '"GCEK TPO" <gcek.tpo.server@gmail.com>',
-                //     to: [user_stu.email],
-                //     subject: "Recived Registration request",
-                //     text: "Dear user, we have recived a your registration request. Account will be created on further approval by your department admin",
-                //     // html: "<b>Hello world?</b>",
-                // });
 
                 const Subject = `Registration request generated Successfully`;
                 const content = `
@@ -189,34 +174,34 @@ const handleRegisterAdmin = async (req, res) => {
     }
 }
 
-// const handleRegisterDeptAdmin = async (req, res) => {
-//     try {
-//         console.log(req.body);
-//         const { name, email, dept, password } = req.body;
-//         const dept_Admin = await TPO_Dept_Admin.findOne({ email: email });
-//         // console.log(dept_Admin);
-//         if (dept_Admin) {
-//             return res.send({ msg: "email already registered" });
-//         }
-//         bcrypt.hash(password, 10, async function (err, hash) {
-//             if (!err) {
-//                 await TPO_Dept_Admin.create({
-//                     name,
-//                     email,
-//                     dept,
-//                     password: hash
-//                 })
-//                 return res.send({ msg: "TPO department admin registered Successfully" });
-//             }
-//             else {
-//                 console.log(err);
-//                 return res.status(500).send({ msg: "Internal Server error" });
-//             }
-//         });
-//     } catch (error) {
-//         return res.status(500).send({ msg: "Internal Server Error" });
-//     }
-// }
+const handleRegisterDeptAdmin = async (req, res) => {
+    try {
+        console.log(req.body);
+        const { name, email, dept, password } = req.body;
+        const dept_Admin = await TPO_Dept_Admin.findOne({ email: email });
+        // console.log(dept_Admin);
+        if (dept_Admin) {
+            return res.send({ msg: "email already registered" });
+        }
+        bcrypt.hash(password, 10, async function (err, hash) {
+            if (!err) {
+                await TPO_Dept_Admin.create({
+                    name,
+                    email,
+                    dept,
+                    password: hash
+                })
+                return res.send({ msg: "TPO department admin registered Successfully" });
+            }
+            else {
+                console.log(err);
+                return res.status(500).send({ msg: "Internal Server error" });
+            }
+        });
+    } catch (error) {
+        return res.status(500).send({ msg: "Internal Server Error" });
+    }
+}
 
 const handleLogin = async (req, res) => {
     try {
@@ -353,21 +338,6 @@ const handleReqAcept = async (req, res) => {
             const UpdatedStu = await OriginalStu.save();
             if (UpdatedStu) {
                 await PendingReq.findByIdAndDelete(request._id);
-                // const transporter = nodemailer.createTransport({
-                //     service: 'gmail',
-                //     auth: {
-                //         user: 'gcek.tpo.server@gmail.com',
-                //         pass: 'wfpq hgjz xnha ypqc'
-                //     }
-                // });
-
-                // const info = await transporter.await SendMail({
-                //     from: '"GCEK TPO" <gcek.tpo.server@gmail.com>',
-                //     to: [OriginalStu.email],
-                //     subject: "Profile Updated Successfully",
-                //     text: "Dear user, This is to inform you that your request about update the profile is accepted by department admin. YOu can confirm changes in your profile.", // plain text body
-                //     // html: "<b>Hello world?</b>",
-                // });
                 const Subject = `Request Rejected`;
                 const content = `
                 <p>"Dear user, This is to inform you that your request about update the profile is accepted by department admin. You can confirm changes in your profile."</p>
@@ -477,4 +447,4 @@ const handleUpdatePersonalDet = async (req, res) => {
         return res.status(500).send({ msg: "Internal Server error" });
     }
 }
-module.exports = { handleRegisterStu, handleRegisterAdmin, handleLogin, handleRegistrationReq, handleReqAcept, handleReqReject, handleGetAllStu, handleUpdatePersonalDet, handleSendVerificationOTP, handleVerifyOTP };
+module.exports = { handleRegisterStu, handleRegisterAdmin,handleRegisterDeptAdmin, handleLogin, handleRegistrationReq, handleReqAcept, handleReqReject, handleGetAllStu, handleUpdatePersonalDet, handleSendVerificationOTP, handleVerifyOTP };

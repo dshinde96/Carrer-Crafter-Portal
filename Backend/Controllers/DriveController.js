@@ -258,8 +258,6 @@ const handleDriveStudent = async (req, res) => {
                 students.push(Student);
             }));
         }
-        // console.log(students);
-        // students=students.reverse();
         return res.send({ students, msg: "Stundets fetched Successfully" });
     } catch (error) {
         return res.status(500).send({ messge: error.message, msg: "Internal server Error" });
@@ -297,9 +295,6 @@ const handleAddEligibleStu = async (req, res) => {
         drive.InterestedStu = drive.InterestedStu.filter((stu) => stu.StuId != selectedStuid);
         await Drives.findByIdAndUpdate(req.params.id, { $set: drive });
         res.send({ drive, msg: "Student Added Successfully" });
-        // selectedStu.map(async(id)=>{
-
-        // })
     } catch (error) {
         console.log(error.message);
         return res.status(500).json({ msg: "Internal Server Error" });
@@ -372,9 +367,6 @@ const handleRejectStu = async (req, res) => {
     await Drives.findByIdAndUpdate(req.params.id, { $set: drive });
     await Applications.findByIdAndDelete(application.ApplicationID);
     res.send({ msg: "Rejected Suucessfully" });
-    // selectedStu.map(async(id)=>{
-
-    // })
     } catch (error) {
         console.log(error.message);
         return res.status(500).json({msg:"Internal Server Error"});
